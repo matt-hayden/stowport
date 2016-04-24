@@ -2,10 +2,16 @@
 fedora-dep:
 	sudo dnf install -y gcc kernel-devel
 
+post-install: modprobe.d modules-load.d
+	sudo cp -Rb $^ /etc
+	sudo depmod -a
+	sudo modprobe wl
+
 src: src64
+	mkdir $@
+	tar zxv -C $@ -f *.tar.gz
 
 src32: hybrid-v35-nodebug-pcoem-6_30_223_271.tar.gz
-
 src64: hybrid-v35_64-nodebug-pcoem-6_30_223_271.tar.gz
 
 %.tar.gz:
