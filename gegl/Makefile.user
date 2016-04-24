@@ -1,0 +1,12 @@
+
+export ACLOCAL_FLAGS ?= -I /usr/local/share/aclocal
+export PKG_CONFIG_PATH ?= /usr/local/lib/pkgconfig
+
+update:
+	git pull
+
+fedora-dep:
+	sudo dnf install -y gcc-c++ intltool json-glib-devel libjpeg-turbo-devel libpng-devel libtiff-devel libwebp-devel gdk-pixbuf2-devel
+
+config: autogen.sh
+	sh autogen.sh --prefix=/usr/local/stow/gegl --disable-nls --disable-docs --disable-glibtest

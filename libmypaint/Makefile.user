@@ -1,0 +1,12 @@
+
+update:
+	git pull
+
+fedora-dep:
+	sudo dnf install -y json-c-devel scons
+
+config:
+	scons prefix=/usr/local/stow/libmypaint
+
+install:
+	scons prefix=/usr/local/stow/libmypaint install

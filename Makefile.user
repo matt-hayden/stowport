@@ -1,0 +1,12 @@
+
+babl:
+	git clone git://git.gnome.org/babl
+
+gegl:
+	git clone git://git.gnome.org/gegl
+
+libmypaint:
+	git clone git://github.com/mypaint/libmypaint.git
+
+gimp:
+	git clone git://git.gnome.org/gimp

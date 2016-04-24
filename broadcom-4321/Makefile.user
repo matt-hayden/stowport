@@ -1,0 +1,12 @@
+
+fedora-dep:
+	sudo dnf install -y gcc kernel-devel
+
+src: src64
+
+src32: hybrid-v35-nodebug-pcoem-6_30_223_271.tar.gz
+
+src64: hybrid-v35_64-nodebug-pcoem-6_30_223_271.tar.gz
+
+%.tar.gz:
+	wget http://www.broadcom.com/docs/linux_sta/$@

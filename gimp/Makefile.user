@@ -1,0 +1,12 @@
+
+export ACLOCAL_FLAGS ?= -I /usr/local/share/aclocal
+export PKG_CONFIG_PATH ?= /usr/local/lib/pkgconfig
+
+update:
+	git pull
+
+fedora-dep:
+	sudo dnf install -y gtk-doc libgudev-devel gtk2-devel libgexiv2-devel aalib-devel python-devel pygtk2-devel bzip2-devel xz-devel lcms2-devel
+
+config:
+	sh autogen.sh --prefix=/usr/local/stow/gimp-2.9 --disable-nls --disable-doc
