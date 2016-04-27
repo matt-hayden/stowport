@@ -1,14 +1,14 @@
 
-export XACLOCAL_FLAGS ?= -I /usr/local/share/aclocal
-export XPKG_CONFIG_PATH ?= /usr/local/lib/pkgconfig
-
-update:
+update: distclean
 	git pull
 
 fedora-dep:
 	sudo dnf install -y atk-devel cairo-devel gpm-devel gtk3-devel libbonoboui-devel libX11-devel libXpm-devel libXt-devel ncurses-devel python-devel python3-devel
 
-config:
+distclean:
+	cd src && make distclean
+
+config: distclean
 	cd src && sh configure --prefix=/usr/local/stow/vim --disable-nls --with-features=huge \
 		--enable-gui=gtk3 --disable-gtk2-check --enable-gpm \
 		--enable-cscope --enable-pythoninterp --enable-python3interp 
