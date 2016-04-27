@@ -20,5 +20,5 @@ gimp:
 	cp -Rul stowport/$@ .
 
 vim:
-	hg clone https://bitbucket.org/vim-mirror/vim
+	git clone git@github:github.com/vim/$@.git
 	cp -Rul stowport/$@ .

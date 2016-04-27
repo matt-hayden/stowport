@@ -3,8 +3,7 @@ export XACLOCAL_FLAGS ?= -I /usr/local/share/aclocal
 export XPKG_CONFIG_PATH ?= /usr/local/lib/pkgconfig
 
 update:
-	hg pull
-	hg update
+	git pull
 
 fedora-dep:
 	sudo dnf install -y gtk-doc libgudev-devel gtk2-devel libgexiv2-devel aalib-devel python-devel pygtk2-devel bzip2-devel xz-devel lcms2-devel
