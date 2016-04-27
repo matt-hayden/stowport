@@ -18,3 +18,7 @@ libmypaint:
 gimp:
 	git clone git://git.gnome.org/$@
 	cp -Rul stowport/$@ .
+
+vim:
+	hg clone https://bitbucket.org/vim-mirror/vim
+	cp -Rul stowport/$@ .
