@@ -6,7 +6,10 @@ update:
 	git pull
 
 fedora-dep:
-	sudo dnf install -y gtk-doc libgudev-devel gtk2-devel libgexiv2-devel aalib-devel python-devel pygtk2-devel bzip2-devel xz-devel lcms2-devel
+	sudo dnf install -y atk-devel cairo-devel gpm-devel gtk3-devel libbonoboui-devel libX11-devel libXpm-devel libXt-devel ncurses-devel python-devel python3-devel
 
 config:
-	sh autogen.sh --prefix=/usr/local/stow/gimp-2.9 --disable-nls --disable-doc
+	cd src && sh configure --prefix=/usr/local/stow/vim --disable-nls --with-features=huge \
+		--enable-gui=gtk3 --disable-gtk2-check --enable-gpm \
+		--enable-cscope --enable-pythoninterp --enable-python3interp 
+
