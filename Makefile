@@ -1,24 +1,33 @@
 
+LN = cp -Rul
 
 broadcom-4321:
-	cp -Rul stowport/$@ .
+	$(LN) stowport/$@ .
 	
 babl:
 	git clone git://git.gnome.org/$@
-	cp -Rul stowport/$@ .
+	$(LN) stowport/$@ .
 
 gegl:
 	git clone git://git.gnome.org/$@
-	cp -Rul stowport/$@ .
+	$(LN) stowport/$@ .
 
 libmypaint:
 	git clone git://git.gnome.org/$@.git
-	cp -Rul stowport/$@ .
+	$(LN) stowport/$@ .
 
 gimp:
 	git clone git://git.gnome.org/$@
-	cp -Rul stowport/$@ .
+	$(LN) stowport/$@ .
 
 vim:
 	git clone git@github:github.com/vim/$@.git
-	cp -Rul stowport/$@ .
+	$(LN) stowport/$@ .
+
+dlib:
+	git clone git@github.com:davisking/$@.git
+	$(LN) stowport/$@ .
+
+rxvt-unicode:
+	cvs -z3 -d :pserver:anonymous@cvs.schmorp.de/schmorpforge co $@
+	$(LN) stowport/$@ .
