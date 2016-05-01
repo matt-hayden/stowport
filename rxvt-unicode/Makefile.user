@@ -9,5 +9,5 @@ config:
 		--enable-256-color \
 		--enable-smart-resize
 
-my-patch: config fedora.patch
+my-patch: fedora.patch
 	patch -b -p1 < $@
