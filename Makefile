@@ -31,3 +31,10 @@ dlib:
 rxvt-unicode:
 	cvs -z3 -d :pserver:anonymous@cvs.schmorp.de/schmorpforge co $@
 	$(LN) stowport/$@ .
+
+ubuntu-fonts: ubuntu-font-family-0.83.zip
+	unzip $^ && rm $^
+
+ubuntu-font-family-0.83.zip:
+	wget http://font.ubuntu.com/download/$@
+	zipinfo $@
