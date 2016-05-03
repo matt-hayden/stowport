@@ -1,0 +1,4 @@
+
+config:
+	autoreconf -fiv
+	sh configure --prefix=/usr/local/stow/ffmpeg

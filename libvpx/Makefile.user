@@ -1,0 +1,6 @@
+
+fedora-dep:
+	sudo dnf install -y yasm-devel
+config:
+	./configure --prefix=/usr/local/stow/ffmpeg --disable-examples --disable-docs \
+		--enable-vp9-postproc --enable-vp10 --as=yasm

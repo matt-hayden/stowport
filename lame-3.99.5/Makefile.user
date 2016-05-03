@@ -1,0 +1,3 @@
+
+config:
+	sh configure --prefix=/usr/local/stow/ffmpeg --enable-nasm

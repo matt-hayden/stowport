@@ -1,0 +1,18 @@
+
+my-python:
+	python3 setup.py install --user
+
+fedora-dep:
+	sudo dnf -y install boost-python3-devel cmake gcc-gfortran openblas-devel
+
+distclean:
+	rm -rf build/
+
+config: distclean
+	mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/usr/local/stow/dlib ..
+
+my-build: build
+	cd build && cmake --build . --config Release
+
+my-install: my-build
+	cd build && make install

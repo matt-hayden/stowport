@@ -1,0 +1,6 @@
+
+fedora-dep:
+	sudo dnf install -y yasm-devel
+config:
+	sh configure --prefix=/usr/local/stow/ffmpeg --enable-static --enable-shared --enable-pic
+	

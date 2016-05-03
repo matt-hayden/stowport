@@ -1,0 +1,5 @@
+
+fedora-deps:
+	sudo dnf install -y cmake yasm-devel
+config:
+	cd build/linux && cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr/local/stow/ffmpeg ../../source

@@ -1,0 +1,17 @@
+export ACLOCAL_FLAGS ?= -I /usr/local/share/aclocal
+export PKG_CONFIG_PATH ?= /usr/local/lib/pkgconfig
+
+fedora-dep:
+	sudo dnf install -y \
+		autoconf automake gcc gcc-c++ git libtool make mercurial nasm pkgconfig \
+		freetype-devel yasm-devel zlib-devel libogg-devel libvorbis-devel libchromaprint-devel libcaca-devel \
+		libtheora-devel gnutls-devel openssl-devel
+
+config:
+	sh configure --prefix=/usr/local/stow/ffmpeg --as=yasm \
+		--enable-gpl --enable-nonfree --enable-shared \
+		--enable-avresample --enable-avisynth --enable-chromaprint --enable-fontconfig --enable-gnutls \
+		--enable-libcaca --enable-libfdk-aac --enable-libfreetype --enable-libmp3lame \
+		--enable-libopus --enable-libtheora --enable-libvorbis --enable-libvpx --enable-libwebp \
+		--enable-libx264 --enable-libx265 --enable-openssl 
+
