@@ -16,7 +16,7 @@ libmypaint:
 	git clone git://git.gnome.org/$@.git
 	$(LN) stowport/$@ .
 
-gimp:
+gimp: babl gegl libmypaint
 	git clone git://git.gnome.org/$@
 	$(LN) stowport/$@ .
 
@@ -80,3 +80,11 @@ rpmfusion:
 	sudo rpm -Uvh http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-23.noarch.rpm
 
 vlc: rpmfusion
+
+libtorrent:
+	git clone git://github.com/rakshasa/libtorrent.git
+	$(LN) stowport/$@ .
+
+rtorrent: libtorrent
+	git clone git://github.com/rakshasa/rtorrent.git
+	$(LN) stowport/$@ .

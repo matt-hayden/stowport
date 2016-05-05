@@ -1,0 +1,7 @@
+
+fedora-dep:
+	sudo dnf install -y cppunit-devel ncurses-devel libcurl-devel
+
+config: autogen.sh
+	sh $^ --prefix=/usr/local/stow/rtorrent
+	sh configure --prefix=/usr/local/stow/rtorrent --enable-ipv6
