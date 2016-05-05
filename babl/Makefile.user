@@ -6,4 +6,4 @@ fedora-dep:
 	sudo dnf install -y libtool
 	
 config: autogen.sh
-	sh autogen.sh --prefix=/usr/local/stow/babl --disable-docs
+	sh $^ --prefix=/usr/local/stow/gimp-2.9 --disable-docs

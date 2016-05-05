@@ -6,7 +6,8 @@ update:
 	git pull
 
 fedora-dep:
-	sudo dnf install -y gcc-c++ intltool json-glib-devel libjpeg-turbo-devel libpng-devel libtiff-devel libwebp-devel gdk-pixbuf2-devel
+	sudo dnf install -y gcc-c++ intltool \
+		json-glib-devel libjpeg-turbo-devel libpng-devel libtiff-devel libwebp-devel gdk-pixbuf2-devel
 
 config: autogen.sh
-	sh autogen.sh --prefix=/usr/local/stow/gegl --disable-nls --disable-docs --disable-glibtest
+	sh $^ --prefix=/usr/local/stow/gimp-2.9 --disable-nls --disable-docs --disable-glibtest
