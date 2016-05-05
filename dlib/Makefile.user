@@ -8,11 +8,5 @@ fedora-dep:
 distclean:
 	rm -rf build/
 
-config: distclean
-	mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/usr/local/stow/dlib ..
-
-my-build: build
-	cd build && cmake --build . --config Release
-
-my-install: my-build
+install:
 	cd build && make install
