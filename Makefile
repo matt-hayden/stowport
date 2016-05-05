@@ -1,6 +1,10 @@
 
 LN = cp -Rul
 
+fedora-dep: rpmfusion
+	sudo dnf install -y stow
+
+
 broadcom-4321:
 	$(LN) stowport/$@ .
 	
@@ -75,7 +79,9 @@ ffmpeg: yasm x264 x265 fdk-aac lame-3.99.5 opus libvpx
 	git clone git://source.ffmpeg.org/ffmpeg.git
 	$(LN) stowport/$@ .
 
-rpmfusion:
+rpmfusion: rpmfusion23
+
+rpmfusion23:
 	sudo rpm -Uvh http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-23.noarch.rpm
 	sudo rpm -Uvh http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-23.noarch.rpm
 
