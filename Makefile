@@ -5,9 +5,13 @@ fedora-dep: rpmfusion
 	sudo dnf install -y stow
 
 
+Debian:
+	$(LN) stowport/$@ .
+
+
 broadcom-4321:
 	$(LN) stowport/$@ .
-	
+
 babl:
 	git clone git://git.gnome.org/$@
 	$(LN) stowport/$@ .
