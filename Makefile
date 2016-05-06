@@ -1,8 +1,11 @@
 
 LN = cp -Rul
 
+debian-dep:
+	sudo apt-get install -y build-essential cvs stow
+
 fedora-dep: rpmfusion
-	sudo dnf install -y stow
+	sudo dnf install -y cvs stow
 
 
 Debian:
@@ -21,7 +24,7 @@ gegl:
 	$(LN) stowport/$@ .
 
 libmypaint:
-	git clone git://git.gnome.org/$@.git
+	git clone git@github.com:mypaint/libmypaint.git
 	$(LN) stowport/$@ .
 
 gimp: babl gegl libmypaint

@@ -1,13 +1,17 @@
 
+
+debian-dep:
+	sudo apt-get install -y libgdk-pixbuf2.0-dev libstartup-notification0-dev \
+		libperl-dev
 fedora-dep:
 	sudo dnf install -y gdk-pixbuf2-devel startup-notification-devel \
 		perl-ExtUtils-Embed perl-ExtUtils-CBuilder perl-ExtUtils-ParseXS
 
 config:
-	###sh autogen.sh
+	sh autogen.sh
 	sh configure -C --prefix=/usr/local/stow/rxvt-unicode \
 		--enable-256-color \
 		--enable-smart-resize
 
 my-patch: fedora.patch
-	patch -b -p1 < $@
+	patch -b -p1 < $^

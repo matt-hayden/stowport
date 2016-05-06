@@ -2,11 +2,14 @@
 update:
 	git pull
 
+debian-dep:
+	sudo apt-get install -y libjson-c-dev scons
+
 fedora-dep:
 	sudo dnf install -y json-c-devel scons
 
 config:
-	scons prefix=/usr/local/stow/libmypaint
+	scons prefix=/usr/local/stow/gimp-2.9
 
 install:
-	scons prefix=/usr/local/stow/libmypaint install
+	scons prefix=/usr/local/stow/gimp-2.9 install

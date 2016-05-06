@@ -5,9 +5,14 @@ export PKG_CONFIG_PATH ?= /usr/local/lib/pkgconfig
 update:
 	git pull
 
+debian-dep:
+	sudo apt-get install -y intltool \
+		libjson-glib-dev libjpeg-dev libpng12-dev libtiff5-dev libwebp-dev libgdk-pixbuf2.0-dev
+
 fedora-dep:
 	sudo dnf install -y gcc-c++ intltool \
 		json-glib-devel libjpeg-turbo-devel libpng-devel libtiff-devel libwebp-devel gdk-pixbuf2-devel
 
-config: autogen.sh
-	sh $^ --prefix=/usr/local/stow/gimp-2.9 --disable-nls --disable-docs --disable-glibtest
+config:
+	sh autogen.sh --prefix=/usr/local/stow/gimp-2.9
+	sh configure --prefix=/usr/local/stow/gimp-2.9 --disable-nls --disable-docs --disable-glibtest
