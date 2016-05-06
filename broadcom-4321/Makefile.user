@@ -2,8 +2,8 @@
 fedora-dep:
 	sudo dnf install -y gcc kernel-devel
 
-post-install: modprobe.d modules-load.d
-	sudo cp -Rb $^ /etc
+post-install:
+	sudo cp -Rb misc/* /etc
 	sudo depmod -a
 	sudo modprobe wl
 

@@ -1,0 +1,2 @@
+:set cryptmethod=blowfish2
+:syntax enable
