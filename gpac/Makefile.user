@@ -1,0 +1,13 @@
+
+debian-dep:
+	sudo apt-get install -y libssl-dev libxmlrpc-core-c3-dev libwxgtk3.0-dev \
+		libjpeg-dev libpng12-dev libfreetype6-dev \
+		libasound2-dev libmozjs185-dev zlib1g-dev \
+		libxv-dev libxvidcore-dev libopenjpeg-dev liba52-0.7.4-dev libfaad-dev \
+		libogg-dev libvorbis-dev libtheora-dev
+#fedora-dep:
+#	sudo dnf install -y yasm-devel
+config:
+	chmod +x configure
+	sh ./configure --prefix=/usr/local/stow/ffmpeg --enable-pic
+	

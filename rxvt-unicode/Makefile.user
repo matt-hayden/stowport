@@ -15,3 +15,6 @@ config:
 
 my-patch: fedora.patch
 	patch -b -p1 < $^
+
+post-install:
+	cp -Rb misc/* /usr/local/stow/rxvt-unicode

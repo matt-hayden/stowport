@@ -1,5 +1,8 @@
 
-fedora-deps:
-	sudo dnf install -y cmake yasm-devel
+
+debian-dep:
+	sudo apt-get install -y cmake mercurial yasm
+fedora-dep:
+	sudo dnf install -y cmake mercurial yasm
 config:
 	cd build/linux && cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr/local/stow/ffmpeg ../../source

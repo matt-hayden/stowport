@@ -1,11 +1,12 @@
 
 LN = cp -Rul
 
+
 debian-dep:
-	sudo apt-get install -y build-essential cvs stow
+	sudo apt-get install -y build-essential cvs mercurial stow
 
 fedora-dep: rpmfusion
-	sudo dnf install -y cvs stow
+	sudo dnf install -y cvs mercurial stow
 
 
 Debian:
@@ -36,7 +37,7 @@ vim:
 	$(LN) stowport/$@ .
 
 dlib:
-	git clone git://github.com:davisking/$@.git
+	git clone git://github.com/davisking/$@.git
 	$(LN) stowport/$@ .
 
 rxvt-unicode:
@@ -54,7 +55,11 @@ yasm:
 	git clone git://github.com/yasm/yasm.git
 	$(LN) stowport/$@ .
 
-x264:
+gpac:
+	git clone git://github.com/gpac/gpac.git
+	$(LN) stowport/$@ .
+	
+x264: gpac
 	git clone git://git.videolan.org/$@
 	$(LN) stowport/$@ .
 
@@ -68,21 +73,21 @@ fdk-aac:
 
 lame-3.99.5.tar.gz:
 	wget http://downloads.sourceforge.net/project/lame/lame/3.99/$@
-	tar tf $@
+	tar atf $@
 
-lame-3.99.5: $@.tar.gz
+lame-3.99.5: lame-3.99.5.tar.gz
 	tar axf $^ && rm $^
 	$(LN) stowport/$@ .
 
 opus:
-	git clone git://git.opus-codec.org/opus.git
+	git clone https://git.xiph.org/opus.git
 	$(LN) stowport/$@ .
 
 libvpx:
 	git clone https://chromium.googlesource.com/webm/$@
 	$(LN) stowport/$@ .
 
-ffmpeg: yasm x264 x265 fdk-aac lame-3.99.5 opus libvpx
+ffmpeg: x264 x265 fdk-aac lame-3.99.5 opus libvpx
 	git clone git://source.ffmpeg.org/ffmpeg.git
 	$(LN) stowport/$@ .
 

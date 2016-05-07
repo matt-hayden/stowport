@@ -2,8 +2,13 @@
 my-python:
 	python3 setup.py install --user
 
+debian-dep:
+	sudo apt-get install -y cmake libboost-python-dev libopenblas-dev liblapack-dev
+
 fedora-dep:
-	sudo dnf -y install boost-python3-devel cmake gcc-gfortran openblas-devel
+	sudo dnf install -y boost-python3-devel cmake gcc-gfortran openblas-devel
+
+
 
 distclean:
 	rm -rf build/

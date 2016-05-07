@@ -3,7 +3,7 @@ URXVTD="urxvtd -q -f"
 
 if ! pgrep -u $USER urxvtd > /dev/null
 then
-	if [[ $SSH_AUTH_SOCK ]]
+	if [ $SSH_AUTH_SOCK ]
 	then
 		$URXVTD
 	else

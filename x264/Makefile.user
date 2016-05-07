@@ -1,6 +1,8 @@
 
+debian-dep:
+	sudo apt-get install -y yasm
 fedora-dep:
-	sudo dnf install -y yasm-devel
+	sudo dnf install -y yasm
 config:
-	sh configure --prefix=/usr/local/stow/ffmpeg --enable-static --enable-shared --enable-pic
+	bash configure --prefix=/usr/local/stow/ffmpeg --enable-static --enable-shared --enable-pic
 	
