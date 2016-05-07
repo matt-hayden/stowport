@@ -1,7 +1,9 @@
 CFLAGS=-fpic
 
+debian-dep:
+	sudo apt-get install -y yasm
 fedora-dep:
-	sudo dnf install -y yasm-devel
+	sudo dnf install -y yasm
 config:
 	./configure --prefix=/usr/local/stow/ffmpeg --disable-examples --disable-docs \
 		--enable-vp9-postproc --disable-vp10 --as=yasm \

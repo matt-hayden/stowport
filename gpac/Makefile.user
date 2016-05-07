@@ -10,4 +10,6 @@ debian-dep:
 config:
 	chmod +x configure
 	sh ./configure --prefix=/usr/local/stow/ffmpeg --enable-pic
-	
+
+post-install:
+	cp -R include/gpac /usr/local/stow/ffmpeg/include/gpac

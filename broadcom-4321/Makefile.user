@@ -1,4 +1,7 @@
 
+
+debian-dep:
+	sudo apt-get install linux-headers-amd64
 fedora-dep:
 	sudo dnf install -y gcc kernel-devel
 
