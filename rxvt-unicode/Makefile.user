@@ -8,9 +8,9 @@ fedora-dep:
 		perl-ExtUtils-Embed perl-ExtUtils-CBuilder perl-ExtUtils-ParseXS
 
 config:
-	sh autogen.sh
-	sh configure -C --prefix=/usr/local/stow/rxvt-unicode \
-		--enable-256-color \
+	#sh autogen.sh
+	sh configure --prefix=/usr/local/stow/rxvt-unicode \
+		--disable-frills --disable-perl --enable-pixbuf --enable-xft --enable-256-color \
 		--enable-smart-resize
 
 my-patch: fedora.patch

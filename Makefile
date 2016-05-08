@@ -2,6 +2,11 @@
 LN = cp -Rul
 
 
+update:
+	[ -d stowport ]
+	cd stowport && git pull
+
+
 debian-dep:
 	sudo apt-get install -y build-essential cvs mercurial stow
 

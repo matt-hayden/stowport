@@ -1,15 +1,10 @@
 #! /bin/sh
-URXVTD="urxvtd -q -f"
+RXVT="urxvtc -ls -vb -fn 'xft:Bitstream Vera Sans Mono:' -fb 'xft:Bitstream Vera Sans Mono:style=Bold'"
 
-if ! pgrep -u $USER urxvtd > /dev/null
+if [ $SSH_AUTH_SOCK ]
 then
-	if [ $SSH_AUTH_SOCK ]
-	then
-		$URXVTD
-	else
-		ssh-agent $URXVTD
-	fi
+	exec $RXVT "$@"
+else
+	exec ssh-agent $RXVT "$@"
 fi
 
-exec urxvtc -ls -vb -fn 'xft:Bitstream Vera Sans Mono:' -fb 'xft:Bitstream Vera Sans Mono:style=Bold' \
-	"$@"
