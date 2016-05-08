@@ -13,3 +13,4 @@ config:
 
 post-install:
 	cp -R include/gpac /usr/local/stow/ffmpeg/include/gpac
+	mv /usr/local/stow/ffmpeg/man /usr/local/stow/ffmpeg/share

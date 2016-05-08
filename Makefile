@@ -25,7 +25,7 @@ gegl:
 	$(LN) stowport/$@ .
 
 libmypaint:
-	git clone git@github.com:mypaint/libmypaint.git
+	git clone git://github.com/mypaint/libmypaint.git
 	$(LN) stowport/$@ .
 
 gimp: babl gegl libmypaint

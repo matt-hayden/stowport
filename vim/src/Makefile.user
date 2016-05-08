@@ -3,6 +3,6 @@ distclean:
 	make distclean
 
 config:
-	sh configure --prefix=/usr/local/stow/vim --disable-nls --with-features=huge \
+	sh configure --prefix=/usr/local/stow/vim --disable-nls \
 		--enable-gui=gtk3 --disable-gtk2-check --enable-gpm \
 		--enable-cscope --enable-pythoninterp --enable-python3interp 
