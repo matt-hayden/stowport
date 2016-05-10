@@ -1,0 +1,11 @@
+export ACLOCAL_FLAGS ?= -I /usr/local/share/aclocal
+export PKG_CONFIG_PATH ?= /usr/local/lib/pkgconfig
+
+update:
+	git pull
+
+centos-dep:
+	sudo dnf install -y openssl-devel zlib-devel
+
+config:
+	sh configure --prefix=/usr/local/stow/tor

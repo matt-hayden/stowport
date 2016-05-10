@@ -1,0 +1,11 @@
+
+update:
+	git pull
+
+centos-dep:
+	sudo dnf install -y openssl-devel
+
+config:
+	sh autogen.sh --prefix=/usr/local/stow/tor
+	sh configure --prefix=/usr/local/stow/tor \
+		--disable-samples --enable-gcc-hardening --enable-openssl
