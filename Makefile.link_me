@@ -9,12 +9,11 @@ update:
 
 debian-dep:
 	sudo apt-get install -y build-essential cvs git mercurial stow
-
 centos-dep:
 	sudo yum install -y epel-release
-	sudo yum install -y cvs mercurial stow
+	sudo yum install -y cvs git mercurial stow
 fedora-dep: rpmfusion
-	sudo dnf install -y cvs mercurial stow
+	sudo dnf install -y cvs git mercurial stow
 
 
 Debian:
