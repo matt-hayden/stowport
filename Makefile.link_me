@@ -8,10 +8,10 @@ update:
 
 
 debian-dep:
-	sudo apt-get install -y build-essential cvs git mercurial stow
+	sudo apt-get install -y build-essential cvs git mercurial stow wget
 centos-dep:
 	sudo yum install -y epel-release
-	sudo yum install -y cvs git mercurial stow
+	sudo yum install -y cvs git mercurial stow wget
 fedora-dep: rpmfusion
 	sudo dnf install -y cvs git mercurial stow
 
@@ -123,5 +123,5 @@ tor-0.2.7.6.tar.gz:
 	tar atf $@
 tor-0.2.7.6: tor-0.2.7.6.tar.gz
 	tar axf $^ # && rm $^
-tor: tor-0.2.7.6
+tor: libevent tor-0.2.7.6
 	$(LN) stowport/$@/* $^/
