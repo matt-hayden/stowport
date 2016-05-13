@@ -2,7 +2,13 @@ update:
 	git pull
 
 centos-dep:
-	sudo yum install -y openssl-devel zlib-devel
+	sudo yum install -y openssl-devel systemd-devel zlib-devel
 
 config:
-	sh configure --prefix=/usr/local/stow/tor
+	sh configure --with-tor-user=_tor --with-tor-group=_tor \
+		--prefix=/usr/local/stow/tor --localstatedir=/var --sysconfdir=/usr/local/etc \
+		--enable-systemd --enable-coverage
+install: DESTDIR=/tmp/tor-0.2.7.6
+	id -u _tor || sudo useradd -d /usr/local/etc/tor -r -s /sbin/nologin -U _tor
+	$(MAKE) install
+	mv $(DESTDIR)/usr/local/etc $(DESTDIR)/usr/local/stow/tor/etc
