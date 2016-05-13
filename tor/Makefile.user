@@ -1,3 +1,6 @@
+install: DESTDIR = /tmp/tor-0.2.7.6
+
+
 update:
 	git pull
 
@@ -8,7 +11,8 @@ config:
 	sh configure --with-tor-user=_tor --with-tor-group=_tor \
 		--prefix=/usr/local/stow/tor --localstatedir=/var --sysconfdir=/usr/local/etc \
 		--enable-systemd --enable-coverage
-install: DESTDIR=/tmp/tor-0.2.7.6
+install:
 	id -u _tor || sudo useradd -d /usr/local/etc/tor -r -s /sbin/nologin -U _tor
-	$(MAKE) install
+	$(MAKE) DESTDIR=$(DESTDIR) install
 	mv $(DESTDIR)/usr/local/etc $(DESTDIR)/usr/local/stow/tor/etc
+	DESTDIR=$(DESTDIR) bash -x my-install.sh
