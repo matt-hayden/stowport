@@ -6,6 +6,6 @@ do
 done
 for wd in /var/log/tor /var/run/tor
 do
-	[[ -d "$wd" ]] || mkdir -p -m 0750 "$wd"
+	[[ -d "$wd" ]] || mkdir -p -m 0755 "$wd"
 	sudo chown _tor:_tor "$wd"
 done

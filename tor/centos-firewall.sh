@@ -1,7 +1,9 @@
-
 TEMPORARY=0
 
-if ((TEMPORARY))
+if grep -qe "^\s*net.ipv4.ip_forward=1" /etc/sysctl.conf
+then
+	echo "Forwarding enabled"
+elif ((TEMPORARY))
 then
 	sysctl -w net.ipv4.ip_forward=1
 else
