@@ -114,6 +114,7 @@ rtorrent: libtorrent
 	git clone git://github.com/rakshasa/rtorrent.git
 	$(LN) stowport/$@ .
 
+# Tor (a service) should use the system libevent
 libevent:
 	git clone git://github.com/libevent/libevent.git
 	$(LN) stowport/$@ .
@@ -123,7 +124,7 @@ tor-0.2.7.6.tar.gz:
 	tar atf $@
 tor-0.2.7.6: tor-0.2.7.6.tar.gz
 	tar axf $^ # && rm $^
-tor: libevent tor-0.2.7.6
+tor: tor-0.2.7.6
 	$(LN) stowport/$@/* $^/
 
 unrealircd:

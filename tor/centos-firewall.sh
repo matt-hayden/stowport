@@ -1,5 +1,5 @@
 
-TEMPORARY=1
+TEMPORARY=0
 
 if ((TEMPORARY))
 then
@@ -23,4 +23,5 @@ $FIREWALLCMD --add-port=80/tcp
 $FIREWALLCMD --list-ports
 $FIREWALLCMD --add-forward-port=port=80:proto=tcp:toport=9091
 $FIREWALLCMD --add-forward-port=port=443:proto=tcp:toport=9090
+firewall-cmd --reload
 

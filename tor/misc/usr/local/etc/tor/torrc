@@ -36,7 +36,7 @@ SOCKSPolicy reject *
 ## may provide sensitive information to an attacker who obtains the logs.
 ##
 ## Send all messages of level 'notice' or higher to /var/log/tor/notices.log
-#Log notice file /var/log/tor/notices.log
+Log notice file /var/log/tor/notices.log
 ## Send every possible message to /var/log/tor/debug.log
 #Log debug file /var/log/tor/debug.log
 ## Use the system log instead of Tor's logfiles
@@ -51,7 +51,7 @@ SOCKSPolicy reject *
 
 ## The directory for keeping all the keys/etc. By default, we store
 ## things in $HOME/.tor on Unix, and in Application Data\tor on Windows.
-#DataDirectory /var/lib/tor
+DataDirectory /var/lib/tor
 
 ## The port on which Tor will listen for local connections from Tor
 ## controller applications, as documented in control-spec.txt.
@@ -185,7 +185,7 @@ DirPortFrontPage /usr/local/etc/tor/tor-exit-notice.html
 ## See the man page entry for ExitPolicyRejectPrivate if you want to allow
 ## "exit enclaving".
 ##
-ExitPolicy accept *:22, accept *:53, accept *:873, accept *:9418, reject *:*
+ExitPolicy accept *:22, accept *:53, accept *:443, accept *:873, accept *:9418, reject *:*
 #ExitPolicy accept *:6660-6667,reject *:* # allow irc ports on IPv4 and IPv6 but no more
 #ExitPolicy accept *:119 # accept nntp ports on IPv4 and IPv6 as well as default exit policy
 #ExitPolicy accept *4:119 # accept nntp ports on IPv4 only as well as default exit policy
@@ -198,6 +198,7 @@ ExitPolicy accept *:22, accept *:53, accept *:873, accept *:9418, reject *:*
 ## won't be able to block all the bridges. Also, websites won't treat you
 ## differently because they won't know you're running Tor. If you can
 ## be a real relay, please do; but if not, be a bridge!
+ExitRelay 1
 BridgeRelay 1
 ## By default, Tor will advertise your bridge to users through various
 ## mechanisms like https://bridges.torproject.org/. If you want to run
