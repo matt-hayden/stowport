@@ -1,4 +1,5 @@
 TEMPORARY=0
+BRIDGE=1
 
 if grep -qe "^\s*net.ipv4.ip_forward=1" /etc/sysctl.conf
 then
@@ -19,11 +20,18 @@ else
 fi
 
 firewall-cmd --reload
-$FIREWALLCMD --add-service=tor
-$FIREWALLCMD --add-port=443/tcp
-$FIREWALLCMD --add-port=80/tcp
+if ((BRIDGE))
+then
+	$FIREWALLCMD --add-service=tor-bridge
+	$FIREWALLCMD --add-port=443/tcp
+	$FIREWALLCMD --add-forward-port=port=443:proto=tcp:toport=9090
+else
+	$FIREWALLCMD --add-service=tor-relay
+	$FIREWALLCMD --add-port=443/tcp
+	$FIREWALLCMD --add-port=80/tcp
+	$FIREWALLCMD --add-forward-port=port=443:proto=tcp:toport=9090
+	$FIREWALLCMD --add-forward-port=port=80:proto=tcp:toport=9091
+fi
 $FIREWALLCMD --list-ports
-$FIREWALLCMD --add-forward-port=port=80:proto=tcp:toport=9091
-$FIREWALLCMD --add-forward-port=port=443:proto=tcp:toport=9090
 firewall-cmd --reload
 

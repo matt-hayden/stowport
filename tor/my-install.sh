@@ -8,7 +8,8 @@ cp contrib/operator-tools/tor-exit-notice.html	$DESTDIR/usr/local/stow/tor/etc/t
 cp misc/configs/torrc				$DESTDIR/usr/local/stow/tor/etc/tor
 cp src/config/geoip6 src/config/geoip		$DESTDIR/usr/local/stow/tor/share/tor
 
-chmod -R a+rx $DESTDIR/usr/local/stow/tor/bin/
+chmod -R a+r	$DESTDIR/usr/local/stow/tor/etc/
+chmod -R a+rx	$DESTDIR/usr/local/stow/tor/bin/
 
 mkdir -p				$DESTDIR/etc/logrotate.d
 cp contrib/operator-tools/tor.logrotate	$DESTDIR/etc/logrotate.d/tor

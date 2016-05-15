@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <service>
-  <short>tor</short>
+  <short>tor-relay</short>
   <description>Make sure to forward 9091 to 80 and 9090 to 443</description>
   <port protocol="tcp" port="80"/>
   <port protocol="tcp" port="443"/>

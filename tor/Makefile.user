@@ -8,7 +8,7 @@ centos-dep:
 config:
 	sh configure --with-tor-user=_tor --with-tor-group=_tor \
 		--prefix=/usr/local/stow/tor --localstatedir=/var --sysconfdir=/usr/local/etc \
-		--enable-systemd --enable-coverage
+		--enable-systemd --enable-coverage --with-openssl-dir=/usr/local
 install:
 	id -u _tor || sudo useradd -d /usr/local/etc/tor -r -s /sbin/nologin -U _tor
 	- mkdir -p /usr/local/stow/tor/etc
