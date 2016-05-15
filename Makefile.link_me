@@ -137,5 +137,5 @@ openssl:
 	cd $@ && git checkout OpenSSL_1_0_2-stable
 	$(LN) stowport/$@ .
 libressl:
-	git clone git://github.com/libressl-portable/portable.git
+	git clone git://github.com/libressl-portable/portable.git $@
 	$(LN) stowport/$@ .

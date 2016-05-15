@@ -2,7 +2,8 @@ install: DESTDIR = /tmp/tor-0.2.7.6
 
 
 centos-dep:
-	sudo yum install -y libevent-devel openssl-devel systemd-devel zlib-devel
+	#sudo yum install -y libevent-devel openssl-devel systemd-devel zlib-devel
+	sudo yum install -y libevent-devel systemd-devel zlib-devel
 
 config:
 	sh configure --with-tor-user=_tor --with-tor-group=_tor \
