@@ -4,7 +4,7 @@ LN = cp -Rul
 
 update:
 	[ -d stowport ]
-	cd stowport && git pull
+	cd stowport && git fetch --all && git merge
 
 
 debian-dep:
@@ -138,4 +138,7 @@ openssl:
 	$(LN) stowport/$@ .
 libressl:
 	git clone git://github.com/libressl-portable/portable.git $@
+	$(LN) stowport/$@ .
+scponly:
+	git clone git://github.com/scponly/scponly.git
 	$(LN) stowport/$@ .
