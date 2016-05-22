@@ -1,5 +1,10 @@
+CP = cp -u
+
+STOWDEST = /usr/local/stow/st
 
 config:
 	patch < config.patch
 install:
 	$(MAKE) clean install
+	mkdir -p $(STOWDEST)/share/applications
+	$(CP) misc/st.desktop $(STOWDEST)/share/applications
