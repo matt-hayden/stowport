@@ -1,10 +1,11 @@
 
+PORTS = stowport
 LN = cp -Rul
 
 
 update:
-	[ -d stowport ]
-	cd stowport && git pull
+	[ -d $(PORTS) ]
+	cd $(PORTS) && git fetch --all && git merge origin/master
 
 
 debian-dep:
@@ -17,39 +18,39 @@ fedora-dep: rpmfusion
 
 
 Debian:
-	$(LN) stowport/$@ .
+	$(LN) $(PORTS)/$@ .
 
 
 broadcom-4321:
-	$(LN) stowport/$@ .
+	$(LN) $(PORTS)/$@ .
 
 babl:
 	git clone git://git.gnome.org/$@
-	$(LN) stowport/$@ .
+	$(LN) $(PORTS)/$@ .
 
 gegl:
 	git clone git://git.gnome.org/$@
-	$(LN) stowport/$@ .
+	$(LN) $(PORTS)/$@ .
 
 libmypaint:
 	git clone git@github.com:mypaint/libmypaint.git
-	$(LN) stowport/$@ .
+	$(LN) $(PORTS)/$@ .
 
 gimp: babl gegl libmypaint
 	git clone git://git.gnome.org/$@
-	$(LN) stowport/$@ .
+	$(LN) $(PORTS)/$@ .
 
 vim:
 	git clone git://github.com/vim/$@.git
-	$(LN) stowport/$@ .
+	$(LN) $(PORTS)/$@ .
 
 dlib:
 	git clone git://github.com/davisking/$@.git
-	$(LN) stowport/$@ .
+	$(LN) $(PORTS)/$@ .
 
 rxvt-unicode:
 	cvs -z3 -d :pserver:anonymous@cvs.schmorp.de/schmorpforge co $@
-	$(LN) stowport/$@ .
+	$(LN) $(PORTS)/$@ .
 
 ubuntu-fonts: ubuntu-font-family-0.83.zip
 	unzip $^ && rm $^
@@ -59,24 +60,24 @@ ubuntu-font-family-0.83.zip:
 	zipinfo $@
 
 yasm:
-	git clone git://github.com/yasm/yasm.git
-	$(LN) stowport/$@ .
+	git clone git://github.com/yasm/$@.git
+	$(LN) $(PORTS)/$@ .
 
 gpac:
 	git clone git://github.com/gpac/gpac.git
-	$(LN) stowport/$@ .
+	$(LN) $(PORTS)/$@ .
 	
 x264: gpac
 	git clone git://git.videolan.org/$@
-	$(LN) stowport/$@ .
+	$(LN) $(PORTS)/$@ .
 
 x265:
 	hg clone https://bitbucket.org/multicoreware/$@
-	$(LN) stowport/$@ .
+	$(LN) $(PORTS)/$@ .
 
 fdk-aac:
 	git clone git://git.code.sf.net/p/opencore-amr/$@
-	$(LN) stowport/$@ .
+	$(LN) $(PORTS)/$@ .
 
 lame-3.99.5.tar.gz:
 	wget http://downloads.sourceforge.net/project/lame/lame/3.99/$@
@@ -84,19 +85,19 @@ lame-3.99.5.tar.gz:
 
 lame-3.99.5: lame-3.99.5.tar.gz
 	tar axf $^ && rm $^
-	$(LN) stowport/$@ .
+	$(LN) $(PORTS)/$@ .
 
 opus:
-	git clone https://git.xiph.org/opus.git
-	$(LN) stowport/$@ .
+	git clone https://git.xiph.org/$@.git
+	$(LN) $(PORTS)/$@ .
 
 libvpx:
 	git clone https://chromium.googlesource.com/webm/$@
-	$(LN) stowport/$@ .
+	$(LN) $(PORTS)/$@ .
 
 ffmpeg: x264 x265 fdk-aac lame-3.99.5 opus libvpx
-	git clone git://source.ffmpeg.org/ffmpeg.git
-	$(LN) stowport/$@ .
+	git clone git://source.ffmpeg.org/$@.git
+	$(LN) $(PORTS)/$@ .
 
 rpmfusion: rpmfusion23
 
@@ -107,17 +108,17 @@ rpmfusion23:
 vlc: rpmfusion
 
 libtorrent:
-	git clone git://github.com/rakshasa/libtorrent.git
-	$(LN) stowport/$@ .
+	git clone git://github.com/rakshasa/$@.git
+	$(LN) $(PORTS)/$@ .
 
 rtorrent: libtorrent
-	git clone git://github.com/rakshasa/rtorrent.git
-	$(LN) stowport/$@ .
+	git clone git://github.com/rakshasa/$@.git
+	$(LN) $(PORTS)/$@ .
 
 # Tor (a service) should use the system libevent
 libevent:
-	git clone git://github.com/libevent/libevent.git
-	$(LN) stowport/$@ .
+	git clone git://github.com/libevent/$@.git
+	$(LN) $(PORTS)/$@ .
 tor-0.2.7.6.tar.gz:
 	wget https://www.torproject.org/dist/$@
 	wget https://www.torproject.org/dist/$@.asc
@@ -125,17 +126,20 @@ tor-0.2.7.6.tar.gz:
 tor-0.2.7.6: tor-0.2.7.6.tar.gz
 	tar axf $^ # && rm $^
 tor: libressl tor-0.2.7.6
-	$(LN) stowport/$@/* $^/
+	$(LN) $(PORTS)/$@/* $^/
 
 unrealircd:
-	git clone git://github.com/unrealircd/unrealircd.git
+	git clone git://github.com/unrealircd/$@.git
 	cd $@ && git checkout stable
-	$(LN) stowport/$@ .
+	$(LN) $(PORTS)/$@ .
 
 openssl:
-	git clone git://github.com/openssl/openssl.git
+	git clone git://github.com/openssl/$@.git
 	cd $@ && git checkout OpenSSL_1_0_2-stable
-	$(LN) stowport/$@ .
+	$(LN) $(PORTS)/$@ .
 libressl:
 	git clone git://github.com/libressl-portable/portable.git $@
-	$(LN) stowport/$@ .
+	$(LN) $(PORTS)/$@ .
+nerdfonts:
+	git clone git://github.com/ryanoasis/nerd-fonts
+	$(LN) $(PORTS)/$@ .
