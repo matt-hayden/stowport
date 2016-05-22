@@ -146,3 +146,6 @@ nerd-fonts:
 scponly:
 	git clone git://github.com/scponly/scponly.git
 	$(LN) $(PORTS)/$@ .
+st:
+	git clone git://git.suckless.org/st
+	$(LN) $(PORTS)/$@ .

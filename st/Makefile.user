@@ -1,0 +1,5 @@
+
+config:
+	patch < config.patch
+install:
+	$(MAKE) clean install
