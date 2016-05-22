@@ -143,3 +143,6 @@ libressl:
 nerd-fonts:
 	git clone git://github.com/ryanoasis/nerd-fonts
 	$(LN) $(PORTS)/$@ .
+scponly:
+	git clone git://github.com/scponly/scponly.git
+	$(LN) $(PORTS)/$@ .
