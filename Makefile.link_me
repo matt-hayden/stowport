@@ -140,6 +140,6 @@ openssl:
 libressl:
 	git clone git://github.com/libressl-portable/portable.git $@
 	$(LN) $(PORTS)/$@ .
-nerdfonts:
+nerd-fonts:
 	git clone git://github.com/ryanoasis/nerd-fonts
 	$(LN) $(PORTS)/$@ .
