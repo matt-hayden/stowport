@@ -3,7 +3,7 @@
 Name=Simple Terminal
 TryExec=st
 Exec=st -f "mplus Nerd Font:style=medium:size=15" -e bash -l
-Icon=urxvt_48x48.xpm
+Icon=xterm-color
 Type=Application
 Categories=Utility;TerminalEmulator;
 StartupNotify=true

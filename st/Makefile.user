@@ -1,4 +1,4 @@
-CP = cp -u
+INSTALL = install -D
 
 STOWDEST = /usr/local/stow/st
 
@@ -6,5 +6,4 @@ config:
 	patch < config.patch
 install:
 	$(MAKE) clean install
-	mkdir -p $(STOWDEST)/share/applications
-	$(CP) misc/st.desktop $(STOWDEST)/share/applications
+	$(INSTALL) misc/st.desktop $(STOWDEST)/share/applications
