@@ -87,7 +87,7 @@ libvpx:
 	git clone https://chromium.googlesource.com/webm/$@
 	$(LN) stowport/$@ .
 
-ffmpeg: x264 x265 fdk-aac lame-3.99.5 opus libvpx
+ffmpeg: x264 x265 fdk-aac opus libvpx
 	git clone git://source.ffmpeg.org/ffmpeg.git
 	$(LN) stowport/$@ .
 

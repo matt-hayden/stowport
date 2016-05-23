@@ -3,7 +3,7 @@ export PKG_CONFIG_PATH ?= /usr/local/lib/pkgconfig
 
 debian-dep:
 	sudo apt-get install -y \
-		libogg-dev libvorbis-dev libtheora-dev \
+		libmp3lame-dev libogg-dev libvorbis-dev libtheora-dev \
 		libchromaprint-dev libcaca-dev libfreetype6-dev libgnutls28-dev
 fedora-dep:
 	sudo dnf install -y \
