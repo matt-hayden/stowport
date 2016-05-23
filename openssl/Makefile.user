@@ -1,0 +1,5 @@
+
+my-config:
+	./config --prefix=/usr/local/stow/openssl-1.0.2 --openssldir=/etc/ssl \
+		enable-ec_nistp_64_gcc_128
+	$(MAKE) depend

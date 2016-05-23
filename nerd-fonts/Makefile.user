@@ -1,0 +1,10 @@
+install:
+	bash install.sh \
+		3270 \
+		DejaVuSansMono \
+		FantasqueSansMono \
+		Inconsolata \
+		Monofur \
+		RobotoMono \
+		SourceCodePro \
+		UbuntuMono

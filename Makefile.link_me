@@ -1,0 +1,151 @@
+
+PORTS = stowport
+LN = cp -Rul
+
+
+update:
+	[ -d $(PORTS) ]
+	cd $(PORTS) && git fetch --all && git merge origin/master
+
+
+debian-dep:
+	sudo apt-get install -y build-essential cvs git mercurial stow wget
+centos-dep:
+	sudo yum install -y epel-release
+	sudo yum install -y cvs git mercurial stow wget
+fedora-dep: rpmfusion
+	sudo dnf install -y cvs git mercurial stow
+
+
+Debian:
+	$(LN) $(PORTS)/$@ .
+
+
+broadcom-4321:
+	$(LN) $(PORTS)/$@ .
+
+babl:
+	git clone git://git.gnome.org/$@
+	$(LN) $(PORTS)/$@ .
+
+gegl:
+	git clone git://git.gnome.org/$@
+	$(LN) $(PORTS)/$@ .
+
+libmypaint:
+	git clone git@github.com:mypaint/libmypaint.git
+	$(LN) $(PORTS)/$@ .
+
+gimp: babl gegl libmypaint
+	git clone git://git.gnome.org/$@
+	$(LN) $(PORTS)/$@ .
+
+vim:
+	git clone git://github.com/vim/$@.git
+	$(LN) $(PORTS)/$@ .
+
+dlib:
+	git clone git://github.com/davisking/$@.git
+	$(LN) $(PORTS)/$@ .
+
+rxvt-unicode:
+	cvs -z3 -d :pserver:anonymous@cvs.schmorp.de/schmorpforge co $@
+	$(LN) $(PORTS)/$@ .
+
+ubuntu-fonts: ubuntu-font-family-0.83.zip
+	unzip $^ && rm $^
+
+ubuntu-font-family-0.83.zip:
+	wget http://font.ubuntu.com/download/$@
+	zipinfo $@
+
+yasm:
+	git clone git://github.com/yasm/$@.git
+	$(LN) $(PORTS)/$@ .
+
+gpac:
+	git clone git://github.com/gpac/gpac.git
+	$(LN) $(PORTS)/$@ .
+	
+x264: gpac
+	git clone git://git.videolan.org/$@
+	$(LN) $(PORTS)/$@ .
+
+x265:
+	hg clone https://bitbucket.org/multicoreware/$@
+	$(LN) $(PORTS)/$@ .
+
+fdk-aac:
+	git clone git://git.code.sf.net/p/opencore-amr/$@
+	$(LN) $(PORTS)/$@ .
+
+lame-3.99.5.tar.gz:
+	wget http://downloads.sourceforge.net/project/lame/lame/3.99/$@
+	tar atf $@
+
+lame-3.99.5: lame-3.99.5.tar.gz
+	tar axf $^ && rm $^
+	$(LN) $(PORTS)/$@ .
+
+opus:
+	git clone https://git.xiph.org/$@.git
+	$(LN) $(PORTS)/$@ .
+
+libvpx:
+	git clone https://chromium.googlesource.com/webm/$@
+	$(LN) $(PORTS)/$@ .
+
+ffmpeg: x264 x265 fdk-aac opus libvpx
+	git clone git://source.ffmpeg.org/$@.git
+	$(LN) $(PORTS)/$@ .
+
+rpmfusion: rpmfusion23
+
+rpmfusion23:
+	sudo rpm -Uvh http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-23.noarch.rpm
+	sudo rpm -Uvh http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-23.noarch.rpm
+
+vlc: rpmfusion
+
+libtorrent:
+	git clone git://github.com/rakshasa/$@.git
+	$(LN) $(PORTS)/$@ .
+
+rtorrent: libtorrent
+	git clone git://github.com/rakshasa/$@.git
+	$(LN) $(PORTS)/$@ .
+
+# Tor (a service) should use the system libevent
+libevent:
+	git clone git://github.com/libevent/$@.git
+	$(LN) $(PORTS)/$@ .
+tor-0.2.7.6.tar.gz:
+	wget https://www.torproject.org/dist/$@
+	wget https://www.torproject.org/dist/$@.asc
+	tar atf $@
+tor-0.2.7.6: tor-0.2.7.6.tar.gz
+	tar axf $^ # && rm $^
+tor: libressl tor-0.2.7.6
+	$(LN) $(PORTS)/$@/* $^/
+
+unrealircd:
+	git clone git://github.com/unrealircd/$@.git
+	cd $@ && git checkout stable
+	$(LN) $(PORTS)/$@ .
+
+openssl:
+	git clone git://github.com/openssl/$@.git
+	cd $@ && git checkout OpenSSL_1_0_2-stable
+	$(LN) $(PORTS)/$@ .
+libressl:
+	git clone git://github.com/libressl-portable/portable.git $@
+	$(LN) $(PORTS)/$@ .
+nerd-fonts:
+	git clone git://github.com/ryanoasis/nerd-fonts
+	$(LN) $(PORTS)/$@ .
+scponly:
+	git clone git://github.com/scponly/scponly.git
+	$(LN) $(PORTS)/$@ .
+st:
+	git clone git://git.suckless.org/st
+	$(LN) $(PORTS)/$@ .

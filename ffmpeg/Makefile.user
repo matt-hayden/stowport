@@ -5,11 +5,11 @@ debian-dep:
 	sudo apt-get install -y \
 		libmp3lame-dev libogg-dev libvorbis-dev libtheora-dev \
 		libchromaprint-dev libcaca-dev libfreetype6-dev libgnutls28-dev
-fedora-dep:
-	sudo dnf install -y \
+centos-dep:
+	sudo yum install -y \
 		autoconf automake gcc gcc-c++ git libtool make mercurial nasm pkgconfig \
 		freetype-devel yasm-devel zlib-devel libogg-devel libvorbis-devel libchromaprint-devel libcaca-devel \
-		libtheora-devel gnutls-devel openssl-devel
+		libtheora-devel gnutls-devel
 
 config:
 	sh configure --prefix=/usr/local/stow/ffmpeg --as=yasm \

@@ -1,0 +1,20 @@
+SUDO = sudo
+STOWDEST = /usr/local/stow/scponly
+SCPUSER = scp
+
+.PHONY: centos-dep config build
+
+config:
+	sh configure --prefix=$(STOWDEST) \
+		--enable-winscp-compat \
+		--enable-scp-compat \
+		--enable-rsync-compat \
+		--with-sftp-server=/usr/libexec/openssh/sftp-server
+
+post-install:
+	grep -q scponly /etc/shells || $(SUDO) /bin/su -c "echo /usr/local/bin/scponly >> /etc/shells"
+	[ `getent passwd $(SCPUSER)` ] || $(SUDO) useradd -mrU -s /usr/local/bin/scponly $(SCPUSER)
+	@ echo Maybe you want to add certain admins to the $(SCPUSER) group
+	@ echo The $(SCPUSER) user is pointless if you dont generate some keys into their HOME/.ssh
+	@ echo You can make additional users with shell=/usr/local/bin/scponly
+	@ echo I.e. useradd --no-user-group -g webdev -s /usr/local/bin/scponly webdev-website

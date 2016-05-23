@@ -1,0 +1,14 @@
+SUDO = sudo
+STOWDEST = /usr/local/stow/libressl
+
+.PHONY: centos-dep config build
+
+centos-dep:
+	$(SUDO) yum install -y cmake perl-podlators # ninja-build
+config:
+	sh autogen.sh --prefix=$(STOWDEST)
+	sh configure --prefix=$(STOWDEST) --sysconfdir=/etc \
+		--enable-nc --with-openssldir=/etc/ssl
+build:
+	mkdir $@ && cd $@ && cmake -DCMAKE_INSTALL_PREFIX:PATH=$(STOWDEST)/ ..
+	$(MAKE) -C $@

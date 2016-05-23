@@ -1,0 +1,9 @@
+INSTALL = install -D
+
+STOWDEST = /usr/local/stow/st
+
+config:
+	patch < config.patch
+install:
+	$(MAKE) clean install
+	$(INSTALL) misc/st.desktop $(STOWDEST)/share/applications

@@ -1,0 +1,16 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=Simple Terminal
+TryExec=st
+Exec=st -f "mplus Nerd Font:style=medium:size=15" -e bash -l
+Icon=xterm-color
+Type=Application
+Categories=Utility;TerminalEmulator;
+StartupNotify=true
+Keywords=Run;
+Actions=New
+
+[Desktop Action New]
+Name=Simple Terminal
+Exec=st -f "mplus Nerd Font:style=medium:size=15" -e bash -l
+OnlyShowIn=Unity
