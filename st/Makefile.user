@@ -6,4 +6,4 @@ config:
 	patch < config.patch
 install:
 	$(MAKE) clean install
-	$(INSTALL) misc/st.desktop $(STOWDEST)/share/applications
+	$(INSTALL) misc/st.desktop $(STOWDEST)/share/applications/st.desktop
