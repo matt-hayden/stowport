@@ -1,0 +1,7 @@
+
+debian-dep:
+	sudo apt-get install libdevmapper-dev uuid-dev \
+		libgcrypt11-dev libudev-dev
+config:
+	mkdir build
+	cd build && cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr/local/stow/tc-play ..

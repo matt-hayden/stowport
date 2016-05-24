@@ -149,3 +149,7 @@ scponly:
 st:
 	git clone git://git.suckless.org/st
 	$(LN) $(PORTS)/$@ .
+tc-play:
+	git clone git://github.com/bwalex/tc-play.git
+	$(LN) $(PORTS)/$@ .
+	
