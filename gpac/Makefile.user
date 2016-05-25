@@ -1,4 +1,5 @@
 
+STOWDEST = /usr/local/stow/ffmpeg/
 debian-dep:
 	sudo apt-get install -y libssl-dev libxmlrpc-core-c3-dev libwxgtk3.0-dev \
 		libjpeg-dev libpng12-dev libfreetype6-dev \
@@ -9,8 +10,9 @@ debian-dep:
 #	sudo dnf install -y yasm-devel
 config:
 	chmod +x configure
-	sh ./configure --prefix=/usr/local/stow/ffmpeg --enable-pic
+	sh ./configure --prefix=$(STOWDEST) --enable-pic
 
 post-install:
-	cp -R include/gpac /usr/local/stow/ffmpeg/include/gpac
-	mv /usr/local/stow/ffmpeg/man /usr/local/stow/ffmpeg/share
+	- mkdir -p $(STOWDEST)/include
+	cp -R include/gpac $(STOWDEST)/include
+	mv $(STOWDEST)/man $(STOWDEST)/share

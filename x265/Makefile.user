@@ -6,3 +6,7 @@ fedora-dep:
 	sudo dnf install -y cmake mercurial yasm
 config:
 	cd build/linux && cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr/local/stow/ffmpeg ../../source
+
+install:
+	#cd build/linux && $(MAKE) install
+	$(MAKE) -C build/linux install

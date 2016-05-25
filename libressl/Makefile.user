@@ -10,5 +10,6 @@ config:
 	sh configure --prefix=$(STOWDEST) --sysconfdir=/etc \
 		--enable-nc --with-openssldir=/etc/ssl
 build:
-	mkdir $@ && cd $@ && cmake -DCMAKE_INSTALL_PREFIX:PATH=$(STOWDEST)/ ..
+	mkdir $@
+	cd $@ && cmake -DCMAKE_INSTALL_PREFIX:PATH=$(STOWDEST)/ ..
 	$(MAKE) -C $@

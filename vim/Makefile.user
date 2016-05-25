@@ -13,7 +13,8 @@ fedora-dep:
 	sudo dnf install -y atk-devel cairo-devel gpm-devel gtk3-devel libbonoboui-devel libX11-devel libXpm-devel libXt-devel ncurses-devel python-devel python3-devel
 
 distclean:
-	cd src && make distclean
+	#cd src && make distclean
+	$(MAKE) -C src distclean
 
 post-install:
 	cp -Rb misc/* /usr/local/stow/vim
