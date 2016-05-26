@@ -1,6 +1,7 @@
 
 update:
-	git pull
+	git fetch --all
+	git merge
 
 debian-dep:
 	sudo apt-get install -y autoconf libtool
@@ -9,4 +10,5 @@ fedora-dep:
 	
 config:
 	sh autogen.sh --prefix=/usr/local/stow/gimp-2.9
-	sh configure --prefix=/usr/local/stow/gimp-2.9 --disable-docs
+	- mkdir my-build
+	cd my-build && sh ../configure --prefix=/usr/local/stow/gimp-2.9 --disable-docs

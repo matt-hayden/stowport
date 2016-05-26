@@ -6,11 +6,11 @@ debian-dep:
 		libjpeg-dev libpng12-dev libfreetype6-dev \
 		libasound2-dev libmozjs185-dev zlib1g-dev \
 		libxv-dev libxvidcore-dev libopenjpeg-dev liba52-0.7.4-dev libfaad-dev \
-		libogg-dev libvorbis-dev libtheora-dev
+		libogg-dev libvorbis-dev libtheora-dev libpulse-dev
 #fedora-dep:
 #	sudo dnf install -y yasm-devel
 config:
-	chmod +x configure
+	#chmod +x configure
 	mkdir my-build
 	cd my-build && sh ../configure \
 		--prefix=$(STOWDEST) --mandir=$(STOWDEST)/share/man \

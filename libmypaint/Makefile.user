@@ -1,6 +1,7 @@
 
 update:
-	git pull
+	git fetch --all
+	git merge
 
 debian-dep:
 	sudo apt-get install -y libjson-c-dev scons

@@ -1,6 +1,7 @@
 
 update: distclean
-	git pull
+	git fetch --all
+	git merge
 
 debian-dep:
 	sudo apt-get install libgpm-dev libx11-dev libxpm-dev libxt-dev \
@@ -12,8 +13,13 @@ debian-dep:
 fedora-dep:
 	sudo dnf install -y atk-devel cairo-devel gpm-devel gtk3-devel libbonoboui-devel libX11-devel libXpm-devel libXt-devel ncurses-devel python-devel python3-devel
 
+
+config:
+	- mkdir my-build
+	cd my-build && sh ../src/configure --prefix=/usr/local/stow/vim --disable-nls \
+		--enable-gui=gtk3 --disable-gtk2-check --enable-gpm \
+		--enable-cscope --enable-pythoninterp --enable-python3interp 
 distclean:
-	#cd src && make distclean
 	$(MAKE) -C src distclean
 
 post-install:

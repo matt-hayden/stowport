@@ -3,7 +3,8 @@ export ACLOCAL_FLAGS ?= -I /usr/local/share/aclocal
 export PKG_CONFIG_PATH ?= /usr/local/lib/pkgconfig
 
 update:
-	git pull
+	git fetch --all
+	git merge
 
 debian-dep:
 	sudo apt-get install -y intltool \
@@ -15,4 +16,5 @@ fedora-dep:
 
 config:
 	sh autogen.sh --prefix=/usr/local/stow/gimp-2.9
-	sh configure --prefix=/usr/local/stow/gimp-2.9 --disable-nls --disable-docs --disable-glibtest
+	- mkdir my-build
+	cd my-build && sh ../configure --prefix=/usr/local/stow/gimp-2.9 --disable-nls --disable-docs --disable-glibtest
