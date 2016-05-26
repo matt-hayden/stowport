@@ -11,6 +11,6 @@ Keywords=Run;
 Actions=New
 
 [Desktop Action New]
-Name=New terminal
+Name=New login
 Exec=st -e bash -l
 OnlyShowIn=Unity
