@@ -12,6 +12,7 @@ https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/Inco
 https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/Meslo/S/complete/Meslo%20LG%20S%20Regular%20for%20Powerline%20Nerd%20Font%20Complete.otf
 https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/RobotoMono/complete/Roboto%20Mono%20Medium%20Nerd%20Font%20Complete.ttf
 https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/UbuntuMono/Regular/complete/Ubuntu%20Mono%20derivative%20Powerline%20Nerd%20Font%20Complete.ttf
+https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/MPlus/Medium/complete/M%2B%201m%20medium%20Nerd%20Font%20Complete.ttf'
 EOF
 
 fc-cache -f "$FONT_DIR"
