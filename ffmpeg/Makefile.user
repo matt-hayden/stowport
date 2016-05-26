@@ -13,11 +13,13 @@ centos-dep:
 		libtheora-devel gnutls-devel
 
 config:
-	- mkdir build
-	cd build/ && sh ../configure --prefix=/usr/local/stow/ffmpeg --as=yasm \
-		--enable-gpl --enable-nonfree --enable-shared \
-		--enable-avresample --enable-avisynth --enable-chromaprint --enable-fontconfig --enable-gnutls \
-		--enable-libcaca --enable-libfdk-aac --enable-libfreetype --enable-libmp3lame \
-		--enable-libopus --enable-libtheora --enable-libvorbis --enable-libvpx --enable-libwebp \
-		--enable-libx264 --enable-libx265 --enable-openssl 
-
+	- mkdir my-build
+	cd my-build && sh ../configure \
+		--prefix=/usr/local/stow/ffmpeg --as=yasm --enable-gpl \
+		--enable-nonfree --enable-shared --enable-avresample \
+		--enable-avisynth --enable-chromaprint --enable-fontconfig \
+		--enable-gnutls --enable-libcaca --enable-libfdk-aac \
+		--enable-libfreetype --enable-libmp3lame --enable-libopus \
+		--enable-libtheora --enable-libvorbis --enable-libvpx \
+		--enable-libwebp --enable-libx264 --enable-libx265 \
+		--enable-openssl 

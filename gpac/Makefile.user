@@ -1,7 +1,8 @@
 
 STOWDEST = /usr/local/stow/ffmpeg/
 debian-dep:
-	sudo apt-get install -y libssl-dev libxmlrpc-core-c3-dev libwxgtk3.0-dev \
+	sudo apt-get install -y \
+		libssl-dev libxmlrpc-core-c3-dev libwxgtk3.0-dev \
 		libjpeg-dev libpng12-dev libfreetype6-dev \
 		libasound2-dev libmozjs185-dev zlib1g-dev \
 		libxv-dev libxvidcore-dev libopenjpeg-dev liba52-0.7.4-dev libfaad-dev \
@@ -10,9 +11,11 @@ debian-dep:
 #	sudo dnf install -y yasm-devel
 config:
 	chmod +x configure
-	sh ./configure --prefix=$(STOWDEST) --enable-pic
+	mkdir my-build
+	cd my-build && sh ../configure \
+		--prefix=$(STOWDEST) --mandir=$(STOWDEST)/share/man \
+		--enable-pic
 
 post-install:
 	- mkdir -p $(STOWDEST)/include
-	cp -R include/gpac $(STOWDEST)/include
-	mv $(STOWDEST)/man $(STOWDEST)/share
+	[ -d $(STOWDEST)/include ] && cp -R include/gpac $(STOWDEST)/include
