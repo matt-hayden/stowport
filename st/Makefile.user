@@ -2,8 +2,11 @@ INSTALL = install -D
 
 STOWDEST = /usr/local/stow/st
 
+debian-dep:
+	sudo apt-get install libxft-dev
 config:
-	patch < config.patch
+	patch < my-patches/font.patch
+	patch < my-patches/paths.patch
 install:
 	$(MAKE) clean install
 	$(INSTALL) misc/st.desktop $(STOWDEST)/share/applications/st.desktop

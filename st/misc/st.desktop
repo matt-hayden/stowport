@@ -2,7 +2,7 @@
 [Desktop Entry]
 Name=Simple Terminal
 TryExec=st
-Exec=st -f "mplus Nerd Font:style=medium:size=15" -e bash -l
+Exec=st
 Icon=xterm-color
 Type=Application
 Categories=Utility;TerminalEmulator;
@@ -11,6 +11,6 @@ Keywords=Run;
 Actions=New
 
 [Desktop Action New]
-Name=Simple Terminal
-Exec=st -f "mplus Nerd Font:style=medium:size=15" -e bash -l
+Name=New terminal
+Exec=st -e bash -l
 OnlyShowIn=Unity
