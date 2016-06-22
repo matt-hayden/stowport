@@ -27,7 +27,8 @@ broadcom-4321:
 babl:
 	git clone git://git.gnome.org/$@
 	$(LN) $(PORTS)/$@ .
-
+cdrtools:
+	$(LN) $(PORTS)/$@ .
 gegl:
 	git clone git://git.gnome.org/$@
 	$(LN) $(PORTS)/$@ .
