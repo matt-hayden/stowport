@@ -1,14 +1,14 @@
 
 
 cdrtools-3.01-fix-20151126-mkisofs-isoinfo.patch:
-	https://sourceforge.net/projects/cdrtools/files/cdrtools-3.01-fix-20151126-mkisofs-isoinfo.patch/download
+	wget -O "$@" https://sourceforge.net/projects/cdrtools/files/cdrtools-3.01-fix-20151126-mkisofs-isoinfo.patch/download
 
 cdrtools-3.01.tar.bz2:
-	wget https://sourceforge.net/projects/cdrtools/files/cdrtools-3.01.tar.bz2/download
+	wget -O "$@" https://sourceforge.net/projects/cdrtools/files/cdrtools-3.01.tar.bz2/download
 cdrtools-3.01: cdrtools-3.01.tar.bz2
 	tar axf $^
 	chmod -R u+w "$@"
 config: cdrtools-3.01 cdrtools-3.01-fix-20151126-mkisofs-isoinfo.patch
 	patch -p0 < cdrtools-3.01-fix-20151126-mkisofs-isoinfo.patch
 install:
-	sudo $(MAKE) -C cdrtools-3.01 INS_BASE=/usr/local/stow/cdrtools $@
+	sudo $(MAKE) -j 4 -l 4.5 -C cdrtools-3.01 INS_BASE=/usr/local/stow/cdrtools $@
