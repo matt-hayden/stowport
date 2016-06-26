@@ -1,16 +1,23 @@
 STOWDEST ?= /usr/local/stow/st
 
+build: config
+	[ -d patched ]
+	$(MULTIMAKE) -C patched
+
 
 debian-dep:
 	sudo apt-get install libxft-dev
 
 
-st:
-	git submodule add git://git.suckless.org/$@
-update: st
+SRC:
+	[ -d $@ ]] || git submodule add git://git.suckless.org/st SRC
+update: SRC
 	git submodule update --init
-config: st
-	patch < patches/font.patch
-	patch < patches/paths.patch
+config: update
+	patch -d SRC -p0 < patches/font.patch
+	patch -d SRC -p0 < patches/paths.patch
+	mv -bT SRC patched && mkdir SRC
+
+
 post-install:
-	cp -Rb misc/* $(STOWDEST)
+	cp -Rb -T $(DESTDIR)/$(STOWDEST) misc/*

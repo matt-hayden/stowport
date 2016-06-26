@@ -1,8 +1,8 @@
 STOWROOT ?= /usr/local/stow
 
 LN = cp -Rul
-MAX_LOAD = $(echo `nproc` + 0.5 | bc)
-MULTIMAKE = $(MAKE) -j -l $(shell echo `nproc` + 0.5 | bc)
+MAX_LOAD = $(shell echo `nproc` + 0.5 | bc)
+export MULTIMAKE = $(MAKE) -j -l $(MAX_LOAD)
 
 
 update:
@@ -27,10 +27,13 @@ vlc: rpmfusion
 
 
 # standalone packages
-broadcom-4321 cdrtools dlib libressl rxvt-unicode scponly st vim:
+broadcom-4321 cdrtools dlib libressl rxvt-unicode scponly vim:
 	[ -d "$@" ]
 	$(MULTIMAKE) -C $@ -f Makefile.recipe config
 	$(MULTIMAKE) -C $@
+st:
+	[ -d "$@" ]
+	$(MULTIMAKE) -C $@ -f Makefile.recipe
 .PHONY: broadcom-4321 cdrtools dlib libressl rxvt-unicode scponly st vim
 
 # GIMP and dependencies
