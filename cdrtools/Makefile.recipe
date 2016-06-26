@@ -2,12 +2,11 @@ STOWDEST ?= /usr/local/stow/cdrtools
 
 SUDO = sudo
 
+
 cdrtools-3.01-fix-20151126-mkisofs-isoinfo.patch:
-	https://sourceforge.net/projects/cdrtools/files/cdrtools-3.01-fix-20151126-mkisofs-isoinfo.patch/download
+	wget -O "$@" https://sourceforge.net/projects/cdrtools/files/cdrtools-3.01-fix-20151126-mkisofs-isoinfo.patch/download
 cdrtools-3.01.tar.bz2:
-	wget https://sourceforge.net/projects/cdrtools/files/cdrtools-3.01.tar.bz2/download
-
-
+	wget -O "$@" https://sourceforge.net/projects/cdrtools/files/cdrtools-3.01.tar.bz2/download
 cdrtools-3.01: cdrtools-3.01.tar.bz2
 	tar axf $^
 	chmod -R u+w "$@"
