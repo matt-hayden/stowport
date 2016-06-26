@@ -1,26 +1,35 @@
 STOWDEST ?= /usr/local/stow/vim
 
+SUDO = sudo
+
+build: config
+	$(MULTIMAKE) -C build/src
+.PHONY: build
 
 debian-dep:
-	sudo apt-get install libgpm-dev libx11-dev libxpm-dev libxt-dev \
+	$(SUDO) apt-get install libgpm-dev libx11-dev libxpm-dev libxt-dev \
 		python-dev libncurses5-dev libgdk-pixbuf2.0-dev
-	#sudo apt-get install libncurses5-dev libgnome2-dev libgnomeui-dev \
-	    #libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
-	    #libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev \
-	    #ruby-dev git
+#	$(SUDO) apt-get install libncurses5-dev libgnome2-dev libgnomeui-dev \
+#	    libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
+#	    libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev \
+#	    ruby-dev git
 fedora-dep:
-	sudo dnf install -y atk-devel cairo-devel gpm-devel gtk3-devel libbonoboui-devel libX11-devel libXpm-devel libXt-devel ncurses-devel python-devel python3-devel
+	$(SUDO) dnf install -y \
+		atk-devel cairo-devel gpm-devel gtk3-devel libbonoboui-devel \
+		libX11-devel libXpm-devel libXt-devel ncurses-devel \
+		python-devel python3-devel
 
 
-vim:
-	git submodule add git://github.com/vim/$@.git
-update: vim
+build/src:
+	git submodule add git://github.com/vim/vim.git build
+update: build/src
 	git submodule update --init
-config: vim
-	sh $^/src/configure --prefix=$(STOWDEST) --disable-nls \
+config: update
+	cd build/src && sh configure --srcdir=SRC/src \
+		--prefix=$(STOWDEST) --disable-nls \
 		--enable-gui=gtk3 --disable-gtk2-check --enable-gpm \
 		--enable-cscope --enable-pythoninterp --enable-python3interp 
 distclean:
-	$(MAKE) -C vim/src distclean
+	$(MAKE) -C SRC/src distclean
 post-install:
-	cp -Rb -T $(STOWDEST) misc/*
+	cp -Rb -T $(DESTDIR)/$(STOWDEST) misc/*

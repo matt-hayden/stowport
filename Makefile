@@ -26,12 +26,13 @@ rpmfusion23:
 vlc: rpmfusion
 
 
-# standalone packages
-broadcom-4321 cdrtools dlib libressl rxvt-unicode scponly vim:
+# standalone packages that nicely provide a Makefile
+broadcom-4321 cdrtools dlib libressl rxvt-unicode scponly:
 	[ -d "$@" ]
 	$(MULTIMAKE) -C $@ -f Makefile.recipe config
 	$(MULTIMAKE) -C $@
-st:
+# less-than-nice packages where my Makefile does errythang:
+st vim:
 	[ -d "$@" ]
 	$(MULTIMAKE) -C $@ -f Makefile.recipe
 .PHONY: broadcom-4321 cdrtools dlib libressl rxvt-unicode scponly st vim
