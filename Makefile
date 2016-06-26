@@ -1,7 +1,7 @@
 STOWROOT ?= /usr/local/stow
 
 LN = cp -Rul
-# tune here for the number of processors you want to use simultaneously
+MAX_LOAD = $(echo `nproc` + 0.5 | bc)
 MULTIMAKE = $(MAKE) -j 5 -l 4.5
 
 
@@ -34,9 +34,12 @@ broadcom-4321 cdrtools dlib libressl rxvt-unicode scponly st vim:
 # GIMP and dependencies
 gimp: STOWDEST=$(STOWROOT)/gimp-2.9
 gimp: babl gegl libmypaint
-	$(MAKE) -C $@ -f Makefile.user config
-babl gegl libmypaint:
-	$(MAKE) -C $@ -f Makefile.user config
+	$(MULTIMAKE) -C $@ -f Makefile.user config
+	$(MULTIMAKE) -C $@
+babl gegl libmypaint: $@
+	$(MULTIMAKE) -C $@ -f Makefile.user config
+	$(MULTIMAKE) -C $@
+.PHONY: babl gegl libmypaint
 
 # ffmpeg and dependencies
 ffmpeg: STOWDEST=$(STOWROOT)/ffmpeg

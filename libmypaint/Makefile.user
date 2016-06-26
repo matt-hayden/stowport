@@ -1,17 +1,17 @@
 STOWDEST ?= /usr/local/stow/gimp-2.9
 
+
 debian-dep:
-	sudo apt-get install -y libjson-c-dev scons
+	sudo apt-get install -y libjson-c-dev # scons
 
 fedora-dep:
-	sudo dnf install -y json-c-devel scons
+	sudo dnf install -y json-c-devel # scons
 
 
-libmypaint:
-	git submodule add git@github.com:mypaint/$@.git
-update: libmypaint
+SRC:
+	git submodule add git@github.com:mypaint/libmypaint.git $@
+update: SRC
 	git submodule update --init
-config: libmypaint
-	scons prefix=$(STOWDEST)
-install:
-	scons prefix=$(STOWDEST) install
+config: update
+	sh SRC/autogen.sh --prefix=$(STOWDEST)
+	sh SRC/configure --prefix=$(STOWDEST)

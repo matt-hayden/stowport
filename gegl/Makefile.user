@@ -13,10 +13,10 @@ fedora-dep:
 		json-glib-devel libjpeg-turbo-devel libpng-devel libtiff-devel libwebp-devel gdk-pixbuf2-devel
 
 gegl:
-	git submodule add git://git.gnome.org/$@
+	git submodule add git://git.gnome.org/$@ SRC
 update: gegl
 	git submodule update --init
 config: gegl
-	cd gegl && sh autogen.sh --prefix=$(STOWDEST)
-	sh gegl/configure --prefix=$(STOWDEST) \
+	sh SRC/autogen.sh --prefix=$(STOWDEST)
+	sh SRC/configure --prefix=$(STOWDEST) \
 		--disable-nls --disable-docs --disable-glibtest
