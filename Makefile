@@ -1,108 +1,60 @@
+STOWROOT ?= /usr/local/stow
 
 LN = cp -Rul
+# tune here for the number of processors you want to use simultaneously
+MULTIMAKE = $(MAKE) -j 5 -l 4.5
+
+
+update:
+	git fetch --all
+	git merge origin/master
 
 
 debian-dep:
-	sudo apt-get install -y build-essential cvs mercurial stow
-
+	sudo apt-get install -y build-essential cvs git mercurial stow wget
+centos-dep:
+	sudo yum install -y epel-release
+	sudo yum install -y cvs git mercurial stow wget
 fedora-dep: rpmfusion
-	sudo dnf install -y cvs mercurial stow
+	sudo dnf install -y cvs git mercurial stow
 
-
-Debian:
-	$(LN) stowport/$@ .
-
-
-broadcom-4321:
-	$(LN) stowport/$@ .
-
-babl:
-	git clone git://git.gnome.org/$@
-	$(LN) stowport/$@ .
-
-gegl:
-	git clone git://git.gnome.org/$@
-	$(LN) stowport/$@ .
-
-libmypaint:
-	git clone git://github.com/mypaint/libmypaint.git
-	$(LN) stowport/$@ .
-
-gimp: babl gegl libmypaint
-	git clone git://git.gnome.org/$@
-	$(LN) stowport/$@ .
-
-vim:
-	git clone git://github.com/vim/$@.git
-	$(LN) stowport/$@ .
-
-dlib:
-	git clone git://github.com/davisking/$@.git
-	$(LN) stowport/$@ .
-
-rxvt-unicode:
-	cvs -z3 -d :pserver:anonymous@cvs.schmorp.de/schmorpforge co $@
-	$(LN) stowport/$@ .
-
-ubuntu-fonts: ubuntu-font-family-0.83.zip
-	unzip $^ && rm $^
-
-ubuntu-font-family-0.83.zip:
-	wget http://font.ubuntu.com/download/$@
-	zipinfo $@
-
-yasm:
-	git clone git://github.com/yasm/yasm.git
-	$(LN) stowport/$@ .
-
-gpac:
-	git clone git://github.com/gpac/gpac.git
-	$(LN) stowport/$@ .
-	
-x264: gpac
-	git clone git://git.videolan.org/$@
-	$(LN) stowport/$@ .
-
-x265:
-	hg clone https://bitbucket.org/multicoreware/$@
-	$(LN) stowport/$@ .
-
-fdk-aac:
-	git clone git://git.code.sf.net/p/opencore-amr/$@
-	$(LN) stowport/$@ .
-
-lame-3.99.5.tar.gz:
-	wget http://downloads.sourceforge.net/project/lame/lame/3.99/$@
-	tar atf $@
-
-lame-3.99.5: lame-3.99.5.tar.gz
-	tar axf $^ && rm $^
-	$(LN) stowport/$@ .
-
-opus:
-	git clone https://git.xiph.org/opus.git
-	$(LN) stowport/$@ .
-
-libvpx:
-	git clone https://chromium.googlesource.com/webm/$@
-	$(LN) stowport/$@ .
-
-ffmpeg: x264 x265 fdk-aac opus libvpx
-	git clone git://source.ffmpeg.org/ffmpeg.git
-	$(LN) stowport/$@ .
-
+# more centos:
 rpmfusion: rpmfusion23
-
 rpmfusion23:
 	sudo rpm -Uvh http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-23.noarch.rpm
 	sudo rpm -Uvh http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-23.noarch.rpm
-
 vlc: rpmfusion
 
-libtorrent:
-	git clone git://github.com/rakshasa/libtorrent.git
-	$(LN) stowport/$@ .
 
+# standalone packages
+broadcom-4321 cdrtools dlib libressl rxvt-unicode scponly st vim:
+	[ -d "$@" ]
+	$(MAKE) -C $@ -f Makefile.user config
+
+# GIMP and dependencies
+gimp: STOWDEST=$(STOWROOT)/gimp-2.9
+gimp: babl gegl libmypaint
+	$(MAKE) -C $@ -f Makefile.user config
+babl gegl libmypaint:
+	$(MAKE) -C $@ -f Makefile.user config
+
+# ffmpeg and dependencies
+ffmpeg: STOWDEST=$(STOWROOT)/ffmpeg
+ffmpeg: x264 x265 fdk-aac opus libvpx
+	$(MAKE) -C $@ -f Makefile.user config
+x264: gpac
+	$(MAKE) -C $@ -f Makefile.user config
+fdk-aac gpac libvpx:
+	$(MAKE) -C $@ -f Makefile.user config
+
+# rtorrent and dependencies
+rtorrent: STOWDEST=$(STOWROOT)/rtorrent
 rtorrent: libtorrent
-	git clone git://github.com/rakshasa/rtorrent.git
-	$(LN) stowport/$@ .
+	$(MAKE) -C $@ -f Makefile.user config
+libtorrent:
+	$(MAKE) -C $@ -f Makefile.user config
+
+# tor and dependencies
+tor: STOWDEST=$(STOWROOT)/tor
+tor: libressl
+	$(MAKE) -C $@ -f Makefile.user config

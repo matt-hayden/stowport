@@ -1,5 +1,10 @@
+STOWDEST ?= /usr/local/stow/openssl-1.0.2
 
-my-config:
-	./config --prefix=/usr/local/stow/openssl-1.0.2 --openssldir=/etc/ssl \
+
+openssl:
+	git submodule add git://github.com/openssl/$@.git
+	cd $@ && git checkout OpenSSL_1_0_2-stable
+config: openssl
+	$^/config --prefix=$(STOWDEST) --openssldir=/etc/ssl \
 		enable-ec_nistp_64_gcc_128
-	$(MAKE) depend
+	$(MAKE) -C $^ depend

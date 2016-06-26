@@ -1,18 +1,15 @@
 
-my-python:
-	python3 setup.py install --user
+
+dlib:
+	git submodule add git://github.com/davisking/$@.git
+update:
+	git submodule update --init
+
+install: dlib update
+	cd dlib && python3 setup.py install --user
 
 debian-dep:
 	sudo apt-get install -y cmake libboost-python-dev libopenblas-dev liblapack-dev
 
 fedora-dep:
 	sudo dnf install -y boost-python3-devel cmake gcc-gfortran openblas-devel
-
-
-
-distclean:
-	rm -rf build/
-
-install:
-	#cd build && make install
-	$(MAKE) -C build $@

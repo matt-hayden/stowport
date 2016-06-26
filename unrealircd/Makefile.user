@@ -1,0 +1,6 @@
+
+unrealircd:
+	git submodule add git://github.com/unrealircd/$@.git
+update: unrealircd
+	cd $^ && git checkout stable
+	

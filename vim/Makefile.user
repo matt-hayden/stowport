@@ -1,7 +1,5 @@
+STOWDEST ?= /usr/local/stow/vim
 
-update: distclean
-	git fetch --all
-	git merge
 
 debian-dep:
 	sudo apt-get install libgpm-dev libx11-dev libxpm-dev libxt-dev \
@@ -14,13 +12,15 @@ fedora-dep:
 	sudo dnf install -y atk-devel cairo-devel gpm-devel gtk3-devel libbonoboui-devel libX11-devel libXpm-devel libXt-devel ncurses-devel python-devel python3-devel
 
 
-config:
-	- mkdir my-build
-	cd my-build && sh ../src/configure --prefix=/usr/local/stow/vim --disable-nls \
+vim:
+	git submodule add git://github.com/vim/$@.git
+update: vim
+	git submodule update --init
+config: vim
+	sh $^/src/configure --prefix=$(STOWDEST) --disable-nls \
 		--enable-gui=gtk3 --disable-gtk2-check --enable-gpm \
 		--enable-cscope --enable-pythoninterp --enable-python3interp 
 distclean:
-	$(MAKE) -C src distclean
-
+	$(MAKE) -C vim/src distclean
 post-install:
-	cp -Rb misc/* /usr/local/stow/vim
+	cp -Rb -T $(STOWDEST) misc/*

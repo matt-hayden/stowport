@@ -1,10 +1,19 @@
+STOWDEST ?= /usr/local/stow/ffmpeg
+
 CFLAGS += -I/usr/local/include
+
 
 debian-dep:
 	sudo apt-get install -y yasm
 fedora-dep:
 	sudo dnf install -y yasm
-config:
-	- mkdir my-build
-	cd my-build && bash ../configure --prefix=/usr/local/stow/ffmpeg --enable-shared --enable-pic
+
+
+x264:
+	git submodule add git://git.videolan.org/$@
+update: x264
+	git submodule update --init
+config: x264
+	sh $^/configure --prefix=$(STOWDEST) \
+		--enable-shared --enable-pic
 	

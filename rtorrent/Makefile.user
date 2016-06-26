@@ -1,13 +1,16 @@
+STOWDEST ?= /usr/local/stow/rtorrent
 
 export ACLOCAL_FLAGS ?= -I /usr/local/share/aclocal
 export PKG_CONFIG_PATH ?= /usr/local/lib/pkgconfig
 
-update:
-	git pull
 
 fedora-dep:
 	sudo dnf install -y cppunit-devel ncurses-devel libcurl-devel xmlrpc-c-devel pkgconfig
 
-config: autogen.sh
-	sh $^ --prefix=/usr/local/stow/rtorrent
-	sh configure --prefix=/usr/local/stow/rtorrent --enable-ipv6 --with-xmlrpc-c
+
+rtorrent:
+	git submodule add git://github.com/rakshasa/$@.git
+config: rtorrent
+	cd $^ && sh autogen.sh --prefix=$(STOWDEST)
+	sh $^/configure --prefix=$(STOWDEST) \
+		--enable-ipv6 --with-xmlrpc-c

@@ -1,10 +1,14 @@
+STOWDEST ?= /usr/local/stow/rtorrent
 
-update:
-	git pull
 
 fedora-dep:
 	sudo dnf install -y cppunit-devel openssl-devel zlib-devel pkgconfig
 
-config: autogen.sh
-	sh $^ --prefix=/usr/local/stow/rtorrent
-	sh configure --prefix=/usr/local/stow/rtorrent
+
+libtorrent:
+	git submodule add git://github.com/rakshasa/$@.git
+update: libtorrent
+	git submodule update --init
+config: libtorrent
+	cd $^ && sh autogen.sh --prefix=$(STOWDEST)
+	$^/configure --prefix=$(STOWDEST)

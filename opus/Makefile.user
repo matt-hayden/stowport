@@ -1,7 +1,16 @@
+STOWDEST ?= /usr/local/stow/ffmpeg
 
 
 debian-dep:
 	sudo apt-get -y install autoconf libtool pkg-config
-config:
-	autoreconf -fiv
-	sh configure --prefix=/usr/local/stow/ffmpeg --enable-float-approx --enable-fuzzing --enable-intrensics
+
+
+opus:
+	git submodule add https://git.xiph.org/$@.git
+	$(LN) $(PORTS)/$@ .
+update: opus
+	git submodule update --init
+config: opus
+	cd $^ && autoreconf -fiv
+	sh $^/configure --prefix=$(STOWDEST) \
+		--enable-float-approx --enable-fuzzing --enable-intrensics

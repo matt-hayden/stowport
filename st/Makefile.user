@@ -1,12 +1,16 @@
-INSTALL = install -D
+STOWDEST ?= /usr/local/stow/st
 
-STOWDEST = /usr/local/stow/st
 
 debian-dep:
 	sudo apt-get install libxft-dev
-config:
-	patch < my-patches/font.patch
-	patch < my-patches/paths.patch
-install:
-	$(MAKE) clean install
-	$(INSTALL) misc/st.desktop $(STOWDEST)/share/applications/st.desktop
+
+
+st:
+	git submodule add git://git.suckless.org/$@
+update: st
+	git submodule update --init
+config: st
+	patch < patches/font.patch
+	patch < patches/paths.patch
+post-install:
+	cp -Rb misc/* $(STOWDEST)

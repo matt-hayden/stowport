@@ -1,12 +1,16 @@
 
-update:
-	git pull
+STOWDEST ?= /usr/local/stow/tor
+
 
 centos-dep:
 	sudo yum group install "Development Tools"
 	#sudo yum install -y openssl-devel
 
-config:
-	sh autogen.sh --prefix=/usr/local/stow/tor
-	sh configure --prefix=/usr/local/stow/tor \
+libevent:
+	git submodule add git://github.com/libevent/$@.git
+update: libevent
+	git submodule update --init
+config: libevent
+	cd $^ && sh autogen.sh --prefix=$(STOWDEST)
+	sh $^/configure --prefix=$(STOWDEST) \
 		--disable-samples --enable-gcc-hardening --enable-openssl

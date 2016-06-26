@@ -1,0 +1,8 @@
+
+
+ubuntu-fonts: ubuntu-font-family-0.83.zip
+	unzip $^ && rm $^
+
+ubuntu-font-family-0.83.zip:
+	wget http://font.ubuntu.com/download/$@
+	zipinfo $@

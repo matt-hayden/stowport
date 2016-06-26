@@ -12,10 +12,14 @@ centos-dep:
 		freetype-devel yasm-devel zlib-devel libogg-devel libvorbis-devel libchromaprint-devel libcaca-devel \
 		libtheora-devel gnutls-devel
 
-config:
-	- mkdir my-build
-	cd my-build && sh ../configure \
-		--prefix=/usr/local/stow/ffmpeg --as=yasm --enable-gpl \
+
+ffmpeg:
+	git submodule add git://source.ffmpeg.org/$@.git
+update: ffmpeg
+	git submodule update --init
+config: ffmpeg
+	sh $^/configure \
+		--prefix=$(STOWDEST) --as=yasm --enable-gpl \
 		--enable-nonfree --enable-shared --enable-avresample \
 		--enable-avisynth --enable-chromaprint --enable-fontconfig \
 		--enable-gnutls --enable-libcaca --enable-libfdk-aac \

@@ -1,7 +1,4 @@
-
-update:
-	git fetch --all
-	git merge
+STOWDEST ?= /usr/local/stow/gimp-2.9
 
 debian-dep:
 	sudo apt-get install -y libjson-c-dev scons
@@ -9,8 +6,12 @@ debian-dep:
 fedora-dep:
 	sudo dnf install -y json-c-devel scons
 
-config:
-	scons prefix=/usr/local/stow/gimp-2.9
 
+libmypaint:
+	git submodule add git@github.com:mypaint/$@.git
+update: libmypaint
+	git submodule update --init
+config: libmypaint
+	scons prefix=$(STOWDEST)
 install:
-	scons prefix=/usr/local/stow/gimp-2.9 install
+	scons prefix=$(STOWDEST) install

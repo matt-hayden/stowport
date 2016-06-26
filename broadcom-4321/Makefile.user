@@ -1,14 +1,17 @@
 
+SUDO = sudo
+
 
 debian-dep:
-	sudo apt-get install linux-headers-amd64
+	$(SUDO) apt-get install linux-headers-amd64
 fedora-dep:
-	sudo dnf install -y gcc kernel-devel
+	$(SUDO) dnf install -y gcc kernel-devel
+
 
 post-install:
-	sudo cp -Rb misc/* /etc
-	sudo depmod -a
-	sudo modprobe wl
+	$(SUDO) cp -Rb misc/* /etc
+	$(SUDO) depmod -a
+	$(SUDO) modprobe wl
 
 src: src64
 	mkdir $@

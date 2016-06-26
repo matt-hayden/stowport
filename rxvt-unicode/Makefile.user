@@ -1,3 +1,4 @@
+STOWDEST ?= /usr/local/stow/rxvt-unicode
 
 
 debian-dep:
@@ -7,14 +8,14 @@ fedora-dep:
 	sudo dnf install -y gdk-pixbuf2-devel startup-notification-devel \
 		perl-ExtUtils-Embed perl-ExtUtils-CBuilder perl-ExtUtils-ParseXS
 
-config:
-	#sh autogen.sh
-	sh configure --prefix=/usr/local/stow/rxvt-unicode \
+
+rxvt-unicode:
+	cvs -z3 -d :pserver:anonymous@cvs.schmorp.de/schmorpforge co $@
+fedora:
+	patch -b -p1 < fedora.patch
+config: rxvt-unicode
+	sh $^/configure --prefix=$(STOWDEST) \
 		--disable-frills --disable-perl --enable-pixbuf --enable-xft --enable-256-color \
 		--enable-smart-resize
-
-my-patch: fedora.patch
-	patch -b -p1 < $^
-
 post-install:
-	cp -Rb misc/* /usr/local/stow/rxvt-unicode
+	cp -Rb misc/* $(STOWDEST)
