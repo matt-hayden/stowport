@@ -2,7 +2,7 @@ STOWROOT ?= /usr/local/stow
 
 LN = cp -Rul
 MAX_LOAD = $(echo `nproc` + 0.5 | bc)
-MULTIMAKE = $(MAKE) -j 5 -l 4.5
+MULTIMAKE = $(MAKE) -j -l $(shell echo `nproc` + 0.5 | bc)
 
 
 update:
@@ -29,35 +29,39 @@ vlc: rpmfusion
 # standalone packages
 broadcom-4321 cdrtools dlib libressl rxvt-unicode scponly st vim:
 	[ -d "$@" ]
-	$(MAKE) -C $@ -f Makefile.user config
+	$(MULTIMAKE) -C $@ -f Makefile.recipe config
+	$(MULTIMAKE) -C $@
+.PHONY: broadcom-4321 cdrtools dlib libressl rxvt-unicode scponly st vim
 
 # GIMP and dependencies
 gimp: STOWDEST=$(STOWROOT)/gimp-2.9
 gimp: babl gegl libmypaint
-	$(MULTIMAKE) -C $@ -f Makefile.user config
+	[ -d "$@" ]
+	$(MULTIMAKE) -C $@ -f Makefile.recipe config
 	$(MULTIMAKE) -C $@
-babl gegl libmypaint: $@
-	$(MULTIMAKE) -C $@ -f Makefile.user config
+babl gegl libmypaint:
+	[ -d "$@" ]
+	$(MULTIMAKE) -C $@ -f Makefile.recipe config
 	$(MULTIMAKE) -C $@
 .PHONY: babl gegl libmypaint
 
 # ffmpeg and dependencies
 ffmpeg: STOWDEST=$(STOWROOT)/ffmpeg
 ffmpeg: x264 x265 fdk-aac opus libvpx
-	$(MAKE) -C $@ -f Makefile.user config
+	$(MAKE) -C $@ -f Makefile.recipe config
 x264: gpac
-	$(MAKE) -C $@ -f Makefile.user config
+	$(MAKE) -C $@ -f Makefile.recipe config
 fdk-aac gpac libvpx:
-	$(MAKE) -C $@ -f Makefile.user config
+	$(MAKE) -C $@ -f Makefile.recipe config
 
 # rtorrent and dependencies
 rtorrent: STOWDEST=$(STOWROOT)/rtorrent
 rtorrent: libtorrent
-	$(MAKE) -C $@ -f Makefile.user config
+	$(MAKE) -C $@ -f Makefile.recipe config
 libtorrent:
-	$(MAKE) -C $@ -f Makefile.user config
+	$(MAKE) -C $@ -f Makefile.recipe config
 
 # tor and dependencies
 tor: STOWDEST=$(STOWROOT)/tor
 tor: libressl
-	$(MAKE) -C $@ -f Makefile.user config
+	$(MAKE) -C $@ -f Makefile.recipe config

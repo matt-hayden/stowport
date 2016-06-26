@@ -1,8 +1,8 @@
 STOWDEST ?= /usr/local/stow/gimp-2.9
 
-babl:
-	git submodule add git://git.gnome.org/$@
-update: babl
+src:
+	git submodule add git://git.gnome.org/babl src
+update: src
 	git submodule update --init
 
 debian-dep:
@@ -10,7 +10,7 @@ debian-dep:
 fedora-dep:
 	sudo dnf install -y autoconf libtool
 
-config: babl
-	cd babl && sh autogen.sh --prefix=$(STOWDEST)
-	sh babl/configure --prefix=$(STOWDEST) \
+config: update
+	sh src/autogen.sh --prefix=$(STOWDEST)
+	sh src/configure --prefix=$(STOWDEST) \
 		--disable-docs
