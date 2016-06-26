@@ -1,11 +1,14 @@
 STOWDEST ?= /usr/local/stow/rxvt-unicode
 
+SUDO = sudo
+
 
 debian-dep:
-	sudo apt-get install -y libgdk-pixbuf2.0-dev libstartup-notification0-dev \
-		libperl-dev
+	$(SUDO) apt-get install -y \
+		libgdk-pixbuf2.0-dev libstartup-notification0-dev libperl-dev
 fedora-dep:
-	sudo dnf install -y gdk-pixbuf2-devel startup-notification-devel \
+	$(SUDO) dnf install -y \
+		gdk-pixbuf2-devel startup-notification-devel \
 		perl-ExtUtils-Embed perl-ExtUtils-CBuilder perl-ExtUtils-ParseXS
 
 
@@ -17,5 +20,7 @@ config: rxvt-unicode
 	sh $^/configure --prefix=$(STOWDEST) \
 		--disable-frills --disable-perl --enable-pixbuf --enable-xft --enable-256-color \
 		--enable-smart-resize
+
+
 post-install:
-	cp -Rb misc/* $(STOWDEST)
+	cp -Rb -T $(DESTDIR)/$(STOWDEST) misc/*

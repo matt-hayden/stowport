@@ -2,9 +2,9 @@ STOWDEST ?= /usr/local/stow/vim
 
 SUDO = sudo
 
-build: config
+default: config
 	$(MULTIMAKE) -C build/src
-.PHONY: build
+
 
 debian-dep:
 	$(SUDO) apt-get install libgpm-dev libx11-dev libxpm-dev libxt-dev \

@@ -1,6 +1,6 @@
 STOWDEST ?= /usr/local/stow/st
 
-build: config
+default: config
 	[ -d patched ]
 	$(MULTIMAKE) -C patched
 

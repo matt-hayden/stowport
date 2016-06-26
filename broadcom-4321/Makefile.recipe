@@ -1,6 +1,9 @@
 
 SUDO = sudo
 
+default:
+	$(SUDO) $(MULTIMAKE) -C build
+
 
 debian-dep:
 	$(SUDO) apt-get install linux-headers-amd64
@@ -9,12 +12,12 @@ fedora-dep:
 
 
 post-install:
-	$(SUDO) cp -Rb misc/* /etc
+	$(SUDO) cp -Rb -T $(DESTDIR)/etc misc/*
 	$(SUDO) depmod -a
 	$(SUDO) modprobe wl
 
-src: src64
-	mkdir $@
+build: src64
+	[ -d $@ ] || mkdir $@
 	tar axv -C $@ -f *.tar.gz
 
 src32: hybrid-v35-nodebug-pcoem-6_30_223_271.tar.gz
