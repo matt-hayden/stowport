@@ -1,4 +1,4 @@
-STOWDEST = /usr/local/stow/OpenCV
+STOWDEST ?= /usr/local/stow/OpenCV
 
 build: update contrib
 	[ -d $@ ] || mkdir $@
@@ -8,9 +8,9 @@ build: update contrib
 		-D INSTALL_C_EXAMPLES=OFF \
 		-D INSTALL_PYTHON_EXAMPLES=ON \
 		-D OPENCV_EXTRA_MODULES_PATH=../contrib/modules \
-		-D BUILD_EXAMPLES=ON ../SRC
-	#$(MULTIMAKE) -C $@
-	cd $@ && ninja
+		-D BUILD_EXAMPLES=ON \
+		../SRC
+	cd $@ && ninja install
 
 
 debian-dep:

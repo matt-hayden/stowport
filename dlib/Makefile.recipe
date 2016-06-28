@@ -1,15 +1,25 @@
+STOWDEST ?= /usr/local/stow/dlib
 
+build: update
+	[ -d $@ ] || mkdir $@
+	cd build && cmake -G"Ninja" \
+		-D CMAKE_INSTALL_PREFIX=$(STOWDEST) \
+		../SRC
+	cd build && ninja install
 
-dlib:
-	git submodule add git://github.com/davisking/$@.git
-update:
-	git submodule update --init
-
-install: dlib update
-	cd dlib && python3 setup.py install --user
 
 debian-dep:
-	sudo apt-get install -y cmake libboost-python-dev libopenblas-dev liblapack-dev
+	sudo apt-get install -y \
+		cmake ninja-build \
+		libboost-python-dev libopenblas-dev liblapack-dev
 
 fedora-dep:
-	sudo dnf install -y boost-python3-devel cmake gcc-gfortran openblas-devel
+	sudo dnf install -y \
+		cmake ninja-build \
+		boost-python3-devel cmake gcc-gfortran openblas-devel
+
+
+SRC:
+	git submodule add git://github.com/davisking/dlib.git $@
+update: SRC
+	git submodule update --init
