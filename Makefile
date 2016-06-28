@@ -32,10 +32,10 @@ cdrtools dlib libressl rxvt-unicode scponly:
 	$(MULTIMAKE) -C $@ -f Makefile.recipe config
 	$(MULTIMAKE) -C $@
 # less-than-nice packages where my Makefile does errythang:
-broadcom-4321 st vim:
+broadcom-4321 opencv st vim:
 	[ -d "$@" ]
 	$(MULTIMAKE) -C $@ -f Makefile.recipe
-.PHONY: broadcom-4321 cdrtools dlib libressl rxvt-unicode scponly st vim
+.PHONY: broadcom-4321 cdrtools dlib libressl opencv rxvt-unicode scponly st vim
 
 # GIMP and dependencies
 gimp: STOWDEST=$(STOWROOT)/gimp-2.9
