@@ -35,19 +35,17 @@ cdrtools libressl rxvt-unicode scponly:
 broadcom-4321 dlib opencv st vim:
 	[ -d "$@" ]
 	$(MULTIMAKE) -C $@ -f Makefile.recipe
-.PHONY: broadcom-4321 cdrtools dlib libressl opencv rxvt-unicode scponly st vim
+.PHONY: broadcom-4321 cdrtools dlib libressl opencv phash rxvt-unicode scponly st vim
 
 # GIMP and dependencies
 gimp: STOWDEST=$(STOWROOT)/gimp-2.9
 gimp: babl gegl libmypaint
 	[ -d "$@" ]
-	$(MULTIMAKE) -C $@ -f Makefile.recipe config
 	$(MULTIMAKE) -C $@
-babl gegl libmypaint:
+babl gegl gpac libmypaint:
 	[ -d "$@" ]
-	$(MULTIMAKE) -C $@ -f Makefile.recipe config
 	$(MULTIMAKE) -C $@
-.PHONY: babl gegl libmypaint
+.PHONY: babl gegl gpac libmypaint
 
 # ffmpeg and dependencies
 ffmpeg: STOWDEST=$(STOWROOT)/ffmpeg
@@ -55,7 +53,7 @@ ffmpeg: x264 x265 fdk-aac opus libvpx
 	$(MAKE) -C $@ -f Makefile.recipe config
 x264: gpac
 	$(MAKE) -C $@ -f Makefile.recipe config
-fdk-aac gpac libvpx:
+fdk-aac libvpx:
 	$(MAKE) -C $@ -f Makefile.recipe config
 
 # rtorrent and dependencies
