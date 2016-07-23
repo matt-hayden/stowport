@@ -27,12 +27,12 @@ vlc: rpmfusion
 
 
 # standalone packages that nicely provide a Makefile
-cdrtools dlib libressl rxvt-unicode scponly:
+cdrtools libressl rxvt-unicode scponly:
 	[ -d "$@" ]
 	$(MULTIMAKE) -C $@ -f Makefile.recipe config
 	$(MULTIMAKE) -C $@
 # less-than-nice packages where my Makefile does errythang:
-broadcom-4321 opencv st vim:
+broadcom-4321 dlib opencv st vim:
 	[ -d "$@" ]
 	$(MULTIMAKE) -C $@ -f Makefile.recipe
 .PHONY: broadcom-4321 cdrtools dlib libressl opencv rxvt-unicode scponly st vim
