@@ -1,8 +1,0 @@
-
-config: distclean
-	cmake -DCMAKE_INSTALL_PREFIX=/usr/local/stow/dlib ..
-
-my-build: build
-	cmake --build . --config Release
-
-# make install, e.g.
