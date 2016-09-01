@@ -8,8 +8,8 @@ build: update contrib
 		-D INSTALL_C_EXAMPLES=OFF \
 		-D INSTALL_PYTHON_EXAMPLES=ON \
 		-D OPENCV_EXTRA_MODULES_PATH=../contrib/modules \
-		-D BUILD_EXAMPLES=ON \
-		../SRC
+		-D BUILD_EXAMPLES=ON ../SRC
+	### $(MULTIMAKE) -C $@
 	cd $@ && ninja install
 
 
