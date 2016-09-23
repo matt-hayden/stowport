@@ -8,7 +8,7 @@ install: bin
 	mkdir -p $(STOWDEST)/bin
 	install -m 0775 bin/asfbin $(STOWDEST)/bin
 	mkdir -p $(STOWDEST)/share/AsfBin/doc
-	install -m 0775 bin/*.txt $(STOWDEST)/share/AsfBin/doc
+	install -m 0664 bin/*.txt $(STOWDEST)/share/AsfBin/doc
 	cd $(STOWDEST)/.. && sudo stow AsfBin
 
 
