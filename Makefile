@@ -37,6 +37,12 @@ broadcom-4321 dlib opencv st vim:
 	$(MULTIMAKE) -C $@ -f Makefile.recipe
 .PHONY: broadcom-4321 cdrtools dlib libressl opencv phash rxvt-unicode scponly st vim
 
+
+libsodium:
+	[ -d "$@" ]
+	$(MULTIMAKE) -C $@
+
+
 # GIMP and dependencies
 gimp: STOWDEST=$(STOWROOT)/gimp-2.9
 gimp: babl gegl libmypaint
