@@ -1,14 +1,19 @@
 STOWDEST ?= /usr/local/stow/AsfBin
 
-
-#install: bin
-#	cp -Rbl bin $(STOWDEST)
-#	cd $(STOWDEST)/.. && sudo stow AsfBin
+debian64-dep:
+	sudo apt-get install -y lib32ncurses5 lib32z1 lib32stdc++6
 
 
-bin32: asfbinlinux1.8.1.892.zip
-	[ -d $@ ] || mkdir $@
-	cd $@ && unzip ../$^
+install: bin
+	mkdir -p $(STOWDEST)/bin
+	install -m 0775 bin/asfbin $(STOWDEST)/bin
+	mkdir -p $(STOWDEST)/share/AsfBin/doc
+	install -m 0775 bin/*.txt $(STOWDEST)/share/AsfBin/doc
+	cd $(STOWDEST)/.. && sudo stow AsfBin
+
+
+bin: asfbinlinux1.8.1.892.zip
+	unzip -d $@ $^
 
 asfbinlinux1.8.1.892.zip:
 	# from http://www.radioactivepages.com/asfbin.aspx
