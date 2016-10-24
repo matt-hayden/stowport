@@ -38,20 +38,21 @@ broadcom-4321 dlib opencv st vim:
 .PHONY: broadcom-4321 cdrtools dlib libressl opencv phash rxvt-unicode scponly st vim
 
 
-libsodium:
+libsodium mutt:
 	[ -d "$@" ]
 	$(MULTIMAKE) -C $@
+.PHONY: libsodium mutt
 
 
 # GIMP and dependencies
 gimp: STOWDEST=$(STOWROOT)/gimp-2.9
-gimp: babl gegl libmypaint
+gimp: babl gegl lcms libmypaint
 	[ -d "$@" ]
 	$(MULTIMAKE) -C $@
-babl gegl gpac libmypaint:
+babl gegl gpac lcms libmypaint:
 	[ -d "$@" ]
-	$(MULTIMAKE) -C $@
-.PHONY: babl gegl gpac libmypaint
+	$(MULTIMAKE) -C $@ install
+.PHONY: babl gegl gpac lcms libmypaint
 
 # ffmpeg and dependencies
 ffmpeg: STOWDEST=$(STOWROOT)/ffmpeg
