@@ -1,5 +1,5 @@
 #! /usr/bin/make -f
-STOWDEST ?= /usr/local/stow/ffmpeg
+STOWDEST ?= /usr/local/stow/vlc
 
 MAX_LOAD ?= $(shell echo `nproc` + 0.5 | bc)
 export MULTIMAKE ?= $(MAKE) -j -l $(MAX_LOAD)
@@ -11,15 +11,15 @@ install: build
 	[ -d /usr/local/lib/pkgconfig ]
 	! [ -L /usr/local/lib/pkgconfig ]
 	$(MAKE) -C $^ install
-	cd $(STOWDEST)/.. && sudo stow ffmpeg && sudo ldconfig
+	cd $(STOWDEST)/.. && sudo stow vlc && sudo ldconfig
 
 
 debian-dep:
-	sudo apt build-dep -y libfdk-aac0
+	#sudo apt build-dep -y libfdk-aac0
 
 
 SRC:
-	[ -d $@ ] || git submodule add git://github.com/mstorsjo/fdk-aac.git $@
+	[ -d $@ ] || git submodule add git://github.com/google/protobuf $@
 update: SRC
 	git submodule update --init
 config: SRC
