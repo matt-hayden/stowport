@@ -15,7 +15,7 @@ install: build
 	[ -d /usr/local/lib/pkgconfig ]
 	! [ -L /usr/local/lib/pkgconfig ]
 	$(MAKE) -C $^ $@
-	cd $(STOWDEST)/.. && sudo stow gimp-2.9 && sudo ldconfig
+	cd $(STOWDEST)/.. && sudo stow --ignore='[.]cache$$' gimp-2.9 && sudo ldconfig
 
 
 debian-dep:
@@ -38,5 +38,5 @@ update: SRC
 config: SRC
 	[ -d build ] || mkdir -p build
 	cd build && sh ../SRC/autogen.sh --prefix=$(STOWDEST)
-	cd build && sh ../SRC/configure --prefix=$(STOWDEST) \
+	cd build && bash ../SRC/configure --prefix=$(STOWDEST) \
 		--disable-docs --disable-nls --disable-glibtest

@@ -15,7 +15,7 @@ install: build
 	[ -d /usr/local/lib/pkgconfig ]
 	! [ -L /usr/local/lib/pkgconfig ]
 	$(MAKE) -C $^ $@
-	cd $(STOWDEST)/.. && sudo stow gimp-2.9 && sudo ldconfig
+	cd $(STOWDEST)/.. && sudo stow --ignore='[.]cache$$' gimp-2.9 && sudo ldconfig
 
 
 debian-dep:
@@ -26,7 +26,7 @@ fedora-dep:
 
 
 SRC:
-	git submodule add git@github.com:mypaint/libmypaint.git $@
+	git submodule add -b master git://github.com/mypaint/libmypaint.git $@
 update: SRC
 	git submodule update --init
 config: SRC
