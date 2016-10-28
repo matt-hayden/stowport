@@ -1,5 +1,5 @@
 #! /usr/bin/make -f
-STOWDEST ?= /usr/local/stow/vlc
+STOWDEST ?= /usr/local/stow/vlc-deps
 
 MAX_LOAD ?= $(shell echo `nproc` + 0.5 | bc)
 export MULTIMAKE ?= $(MAKE) -j -l $(MAX_LOAD)
@@ -10,8 +10,8 @@ build: config
 install: build
 	[ -d /usr/local/lib/pkgconfig ]
 	! [ -L /usr/local/lib/pkgconfig ]
-	$(MAKE) -C $^ install
-	cd $(STOWDEST)/.. && sudo stow vlc && sudo ldconfig
+	$(MAKE) -C $^ $@
+	cd $(STOWDEST)/.. && sudo stow vlc-deps && sudo ldconfig
 
 
 debian-dep:
@@ -19,7 +19,7 @@ debian-dep:
 
 
 SRC:
-	[ -d $@ ] || git submodule add git://github.com/google/protobuf $@
+	[ -d $@ ] || git submodule add -b master git://github.com/google/protobuf $@
 update: SRC
 	git submodule update --init
 config: SRC
