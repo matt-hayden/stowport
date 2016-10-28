@@ -1,0 +1,14 @@
+STOWDEST ?= /usr/local/stow/ffmpeg
+
+RM = trash
+
+
+lame-3.99.5.tar.gz:
+	wget http://downloads.sourceforge.net/project/lame/lame/3.99/$@
+	tar atf $@
+
+lame-3.99.5: lame-3.99.5.tar.gz
+	tar axf $^ && $(RM) $^
+
+config: lame-3.99.5
+	sh $^/configure --prefix=$(STOWDEST) --enable-nasm
