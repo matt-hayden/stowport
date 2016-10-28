@@ -1,5 +1,5 @@
 #! /usr/bin/make -f
-STOWDEST ?= /usr/local/stow/ffmpeg
+STOWDEST ?= /usr/local/stow/vlc-deps
 
 MAX_LOAD ?= $(shell echo `nproc` + 0.5 | bc)
 export MULTIMAKE ?= $(MAKE) -j -l $(MAX_LOAD)
@@ -12,8 +12,8 @@ build: config
 install: build
 	[ -d /usr/local/lib/pkgconfig ]
 	! [ -L /usr/local/lib/pkgconfig ]
-	$(MAKE) -C $^ install
-	cd $(STOWDEST)/.. && sudo stow ffmpeg && sudo ldconfig
+	$(MAKE) -C $^ $@
+	cd $(STOWDEST)/.. && sudo stow vlc-deps && sudo ldconfig
 
 
 debian-dep:
@@ -21,7 +21,7 @@ debian-dep:
 
 
 SRC:
-	[ -d $@ ] || git submodule add https://chromium.googlesource.com/webm/libvpx $@
+	[ -d $@ ] || git submodule add -b master https://chromium.googlesource.com/webm/libvpx $@
 update: SRC
 	git submodule update --init
 config: SRC

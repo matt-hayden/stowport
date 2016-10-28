@@ -8,21 +8,23 @@ export MULTIMAKE ?= $(MAKE) -j -l $(MAX_LOAD)
 build: config
 	$(MULTIMAKE) -C $@
 install: build
-	sudo $(MAKE) -C $^ install
-	cd $(STOWDEST)/.. && sudo stow vlc
+	sudo $(MAKE) -C $^ $@
+	cd $(STOWDEST)/.. && sudo stow --ignore='[.]cache$$' vlc
 
 debian-dep:
-	sudo apt install -y git libtool lua5.1 build-essential pkg-config autoconf libsecret-1-dev
-	sudo apt build-dep -y vlc
+	sudo apt -y install git libtool-bin lua5.1 build-essential pkg-config autoconf libsecret-1-dev
+	#sudo apt -y build-dep vlc
 fedora-dep:
-	sudo yum -y install git libtool lua pkgconfig
+	sudo dnf -y install git libtool lua pkgconfig
 
 SRC:
-	[ -d $@ ] || git submodule add git://git.videolan.org/vlc.git $@
+	[ -d $@ ] || git submodule add -b master git://git.videolan.org/vlc.git $@
+	sh $@/bootstrap
 update: SRC
 	git submodule update --init
+	sh $^/bootstrap
 config: SRC
 	[ -d build ] || mkdir -p build
-	cd build && sh ../SRC/bootstrap
-	cd build && sh ../SRC/configure --prefix=$(STOWDEST) \
-		--disable-nls --enable-pulse --enable-avcodec=/usr/local/stow/ffmpeg
+	cd build && bash ../SRC/configure --prefix=$(STOWDEST) \
+		--disable-nls --enable-pulse \
+		--enable-fdkaac=/usr/local --enable-x264=/usr/local --enable-x265=/usr/local --enable-opus=/usr/local --enable-vpx=/usr/local
