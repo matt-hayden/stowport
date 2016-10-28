@@ -9,13 +9,17 @@ export ACLOCAL_FLAGS ?= -I /usr/local/share/aclocal
 export PKG_CONFIG_PATH ?= /usr/local/lib/pkgconfig
 
 
+build: config
+	$(MULTIMAKE) -C $@
 install: build
-	$(MAKE) -C build install
+	[ -d /usr/local/lib/pkgconfig ]
+	! [ -L /usr/local/lib/pkgconfig ]
+	$(MAKE) -C $^ $@
 	cd $(STOWDEST)/.. && sudo stow gimp-2.9 && sudo ldconfig
 
 
 debian-dep:
-	sudo apt-get install -y libjson-c-dev # scons
+	sudo apt-get install -y libglib2.0-dev libjson-c-dev intltool # scons
 
 fedora-dep:
 	sudo dnf install -y json-c-devel # scons
@@ -29,5 +33,3 @@ config: SRC
 	[ -d build ] || mkdir -p build
 	cd build && sh ../SRC/autogen.sh --prefix=$(STOWDEST)
 	cd build && sh ../SRC/configure --prefix=$(STOWDEST)
-build: config
-	$(MULTIMAKE) -C $@

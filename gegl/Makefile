@@ -1,23 +1,25 @@
 #! /usr/bin/make -f
 STOWDEST ?= /usr/local/stow/gimp-2.9
 
-MAX_LOAD ?= $(shell echo `nproc` + 0.5 | bc)
-export MULTIMAKE ?= $(MAKE) -j -l $(MAX_LOAD)
-
-
 export ACLOCAL_FLAGS ?= -I /usr/local/share/aclocal
 export PKG_CONFIG_PATH ?= /usr/local/lib/pkgconfig
+
+
+MAX_LOAD ?= $(shell echo `nproc` + 0.5 | bc)
+export MULTIMAKE ?= $(MAKE) -j -l $(MAX_LOAD)
 
 
 build: config
 	$(MULTIMAKE) -C $@
 install: build
-	$(MAKE) -C build install
+	[ -d /usr/local/lib/pkgconfig ]
+	! [ -L /usr/local/lib/pkgconfig ]
+	$(MAKE) -C $^ $@
 	cd $(STOWDEST)/.. && sudo stow gimp-2.9 && sudo ldconfig
 
 
 debian-dep:
-	sudo apt-get install -y autoconf libtool intltool \
+	sudo apt -y install autoconf libtool intltool \
 		libjson-glib-dev libjpeg-dev libpng12-dev libtiff5-dev libwebp-dev libgdk-pixbuf2.0-dev
 
 fedora-dep:
