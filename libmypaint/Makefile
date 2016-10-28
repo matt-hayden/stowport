@@ -1,5 +1,5 @@
 #! /usr/bin/make -f
-STOWDEST ?= /usr/local/stow/gimp-2.9
+STOWDEST ?= /usr/local/stow/gimp-deps
 
 MAX_LOAD ?= $(shell echo `nproc` + 0.5 | bc)
 export MULTIMAKE ?= $(MAKE) -j -l $(MAX_LOAD)
@@ -15,7 +15,7 @@ install: build
 	[ -d /usr/local/lib/pkgconfig ]
 	! [ -L /usr/local/lib/pkgconfig ]
 	$(MAKE) -C $^ $@
-	cd $(STOWDEST)/.. && sudo stow --ignore='[.]cache$$' gimp-2.9 && sudo ldconfig
+	cd $(STOWDEST)/.. && sudo stow --ignore='[.]cache$$' gimp-deps && sudo ldconfig
 
 
 debian-dep:
