@@ -15,7 +15,7 @@ build: config
 install: build
 	[ -d /usr/local/lib/pkgconfig ]
 	! [ -L /usr/local/lib/pkgconfig ]
-	$(MAKE) -C $^ install
+	$(MAKE) -C $^ $@
 	cd $(STOWDEST)/.. && sudo stow ffmpeg && sudo ldconfig
 
 
@@ -24,7 +24,7 @@ debian-dep:
 		libmp3lame-dev libogg-dev libvorbis-dev libtheora-dev \
 		libchromaprint-dev libcaca-dev libfdk-aac0 libfreetype6-dev libgnutls28-dev \
 		libfontconfig1-dev libwebp-dev yasm
-	sudo apt build-dep -y ffmpeg
+	#sudo apt build-dep -y ffmpeg
 centos-dep:
 	sudo yum install -y \
 		autoconf automake gcc gcc-c++ git libtool make mercurial nasm pkgconfig \
@@ -33,17 +33,17 @@ centos-dep:
 
 
 SRC:
-	[ -d $@ ] || git submodule add git://source.ffmpeg.org/ffmpeg.git $@
+	[ -d $@ ] || git submodule add -b master git://source.ffmpeg.org/ffmpeg.git $@
 update: SRC
 	git submodule update --init
 config: SRC
 	[ -d build ] || mkdir -p build
 	cd build && sh ../SRC/configure --prefix=$(STOWDEST) \
-		--as=yasm --enable-gpl \
+		--disable-static --as=yasm --enable-gpl \
 		--enable-nonfree --enable-shared --enable-avresample \
 		--enable-avisynth --enable-chromaprint --enable-fontconfig \
 		--enable-gnutls --enable-libcaca --enable-libfdk-aac \
-		--enable-libfreetype --enable-libmp3lame --enable-libopus \
+		--enable-libfreetype --enable-libfontconfig --enable-libmp3lame --enable-libopus \
 		--enable-libtheora --enable-libvorbis --enable-libvpx \
 		--enable-libwebp --enable-libx264 --enable-libx265 \
 		--enable-openssl 

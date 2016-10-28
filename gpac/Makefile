@@ -1,5 +1,5 @@
 #! /usr/bin/make -f
-STOWDEST ?= /usr/local/stow/ffmpeg/
+STOWDEST ?= /usr/local/stow/gpac
 
 MAX_LOAD ?= $(shell echo `nproc` + 0.5 | bc)
 export MULTIMAKE ?= $(MAKE) -j -l $(MAX_LOAD)
@@ -8,10 +8,10 @@ export MULTIMAKE ?= $(MAKE) -j -l $(MAX_LOAD)
 build: config
 	$(MULTIMAKE) -C $@
 install: build
-	$(MAKE) -C build install
+	$(MAKE) -C $^ $@
 	- mkdir -p $(STOWDEST)/include
 	[ -d $(STOWDEST)/include ] && cp -Ru SRC/include/gpac $(STOWDEST)/include
-	cd $(STOWDEST)/.. && sudo stow ffmpeg
+	cd $(STOWDEST)/.. && sudo stow gpac
 
 
 debian-dep:
@@ -26,7 +26,7 @@ debian-dep:
 
 
 SRC:
-	[ -d $@ ] || git submodule add git://github.com/gpac/gpac.git $@
+	[ -d $@ ] || git submodule add -b master git://github.com/gpac/gpac.git $@
 update: SRC
 	git submodule update --init
 config: SRC
@@ -34,5 +34,6 @@ config: SRC
 	chmod +x SRC/configure
 	cd build && sh ../SRC/configure \
 		--prefix=$(STOWDEST) --mandir=$(STOWDEST)/share/man \
-		--enable-pic
+		--disable-static \
+		--use-ffmpeg=/usr/local --enable-pic
 
