@@ -13,7 +13,7 @@ install: build
 
 
 SRC:
-	[ -d $@ ] || git submodule add git://github.com/jedisct1/libsodium.git $@
+	[ -d $@ ] || git submodule add -b master git://github.com/jedisct1/libsodium.git $@
 update: SRC
 	git submodule update --init
 config: SRC
