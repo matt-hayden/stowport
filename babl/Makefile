@@ -1,17 +1,7 @@
 #! /usr/bin/make -f
-STOWDEST ?= /usr/local/stow/gimp-deps
-
-MAX_LOAD ?= $(shell echo `nproc` + 0.5 | bc)
-export MULTIMAKE ?= $(MAKE) -j -l $(MAX_LOAD)
-
-
-build: config
-	$(MULTIMAKE) -C $@
-install: build
-	[ -d /usr/local/lib/pkgconfig ]
-	! [ -L /usr/local/lib/pkgconfig ]
-	$(MAKE) -C $^ $@
-	cd $(STOWDEST)/.. && sudo stow --ignore='[.]cache$$' gimp-deps && sudo ldconfig
+STOWDEST ?= gimp-deps
+### ../autoconf-template.mk includes 'install' as the default target
+include ../autoconf-template.mk
 
 
 debian-dep:
@@ -26,6 +16,6 @@ update: SRC
 	git submodule update --init
 config: SRC debian-dep
 	[ -d build ] || mkdir -p build
-	cd build && sh ../SRC/autogen.sh --prefix=$(STOWDEST)
-	cd build && sh ../SRC/configure --prefix=$(STOWDEST) \
+	cd build && sh ../SRC/autogen.sh --prefix=$(PREFIX)
+	cd build && sh ../SRC/configure --prefix=$(PREFIX) \
 		--disable-docs

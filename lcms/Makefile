@@ -1,12 +1,6 @@
 #! /usr/bin/make -f
-STOWDEST ?= /usr/local/stow/gimp-deps
-
-
-build: config
-	$(MULTIMAKE) -C $@
-install: build
-	$(MAKE) -C $^ $@
-	cd $(STOWDEST)/.. && sudo stow gimp-deps && sudo ldconfig
+STOWDEST ?= gimp-deps
+include ../autoconf-template.mk
 
 
 SRC:
@@ -15,4 +9,5 @@ update: SRC
 	git submodule update --init
 config: SRC # debian-dep
 	[ -d build ] || mkdir -p build
-	cd build && sh ../SRC/configure --prefix=$(STOWDEST)
+	cd build && sh ../SRC/configure --prefix=$(PREFIX) \
+		--disable-static
