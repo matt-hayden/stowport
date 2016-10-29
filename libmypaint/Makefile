@@ -17,4 +17,5 @@ update: SRC
 config: SRC
 	[ -d build ] || mkdir -p build
 	cd build && sh ../SRC/autogen.sh --prefix=$(PREFIX)
-	cd build && sh ../SRC/configure --prefix=$(PREFIX)
+	cd build && sh ../SRC/configure --prefix=$(PREFIX) \
+		--disable-static

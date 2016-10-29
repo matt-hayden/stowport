@@ -8,6 +8,7 @@ export MULTIMAKE = $(MAKE) -j -l $(MAX_LOAD)
 update:
 	git fetch --all
 	git merge origin/master
+	git submodule update
 
 
 debian-dep:
@@ -45,23 +46,32 @@ libsodium mutt:
 
 
 # GIMP and dependencies
-gimp: STOWDEST=$(STOWROOT)/gimp-2.9
+gimp: STOWDEST=gimp-2.9
+babl gegl lcms libmypaint: STOWDEST=gimp-deps
 gimp: babl gegl lcms libmypaint
-	[ -d "$@" ]
-	$(MULTIMAKE) -C $@
-babl gegl gpac lcms libmypaint:
+gegl: babl lcms
+gimp babl gegl lcms libmypaint:
 	[ -d "$@" ]
 	$(MULTIMAKE) -C $@ install
-.PHONY: babl gegl gpac lcms libmypaint
+.PHONY: babl gegl lcms libmypaint
 
 # ffmpeg and dependencies
-ffmpeg: STOWDEST=$(STOWROOT)/ffmpeg
+ffmpeg: STOWDEST=ffmpeg
+x264 x265 fdk-aac opus libvpx: STOWDEST=ffmpeg-deps
+.PHONY: x264 x265 fdk-aac opus libvpx
 ffmpeg: x264 x265 fdk-aac opus libvpx
-	$(MAKE) -C $@ -f Makefile.recipe config
-x264: gpac
-	$(MAKE) -C $@ -f Makefile.recipe config
-fdk-aac libvpx:
-	$(MAKE) -C $@ -f Makefile.recipe config
+.PHONY: ffmpeg libarchive protobuf
+vlc: ffmpeg libarchive protobuf
+vlc x264 x265 fdk-aac opus libvpx libarchive protobuf ffmpeg:
+	[ -d "$@" ]
+	$(MULTIMAKE) -C $@ install
+
+.PHONY: MP4Box gpac
+MP4Box: gpac
+gpac:
+	[ -d "$@" ]
+	$(MULTIMAKE) -C $@ install
+
 
 # rtorrent and dependencies
 rtorrent: STOWDEST=$(STOWROOT)/rtorrent

@@ -22,6 +22,7 @@ update: SRC
 	git submodule update --init
 config: SRC
 	[ -d build ] || mkdir -p build
-	cd build && sh ../SRC/autogen.sh --prefix=$(PREFIX)
+	#cd build && sh ../SRC/autogen.sh --prefix=$(PREFIX)
 	cd build && bash ../SRC/configure --prefix=$(PREFIX) \
+		--disable-static \
 		--disable-docs --disable-nls --disable-glibtest
