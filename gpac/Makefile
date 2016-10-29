@@ -1,18 +1,13 @@
 #! /usr/bin/make -f
-STOWDEST ?= /usr/local/stow/gpac
+STOWDEST ?= gpac
+include ../autoconf-template.mk
 
-MAX_LOAD ?= $(shell echo `nproc` + 0.5 | bc)
-export MULTIMAKE ?= $(MAKE) -j -l $(MAX_LOAD)
-
-
-build: config
-	$(MULTIMAKE) -C $@
-install: build
-	$(MAKE) -C $^ $@
-	- mkdir -p $(STOWDEST)/include
-	[ -d $(STOWDEST)/include ] && cp -Ru SRC/include/gpac $(STOWDEST)/include
-	cd $(STOWDEST)/.. && sudo stow gpac
-
+# custom installation
+reinstall:
+	$(MAKE) -C build install
+	mkdir $(PREFIX)/include
+	cp -Ruv -t $(PREFIX)/include SRC/include/gpac
+	cd $(STOWROOT) && sudo stow gpac
 
 debian-dep:
 	sudo apt-get install -y \
@@ -33,7 +28,7 @@ config: SRC
 	[ -d build ] || mkdir -p build
 	chmod +x SRC/configure
 	cd build && sh ../SRC/configure \
-		--prefix=$(STOWDEST) --mandir=$(STOWDEST)/share/man \
+		--prefix=$(PREFIX) --mandir=$(PREFIX)/share/man \
 		--disable-static \
 		--use-ffmpeg=/usr/local --enable-pic
 
