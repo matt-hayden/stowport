@@ -1,17 +1,6 @@
 #! /usr/bin/make -f
-STOWDEST ?= /usr/local/stow/vlc-deps
-
-MAX_LOAD ?= $(shell echo `nproc` + 0.5 | bc)
-export MULTIMAKE ?= $(MAKE) -j -l $(MAX_LOAD)
-
-
-build: config
-	$(MULTIMAKE) -C $@
-install: build
-	[ -d /usr/local/lib/pkgconfig ]
-	! [ -L /usr/local/lib/pkgconfig ]
-	$(MAKE) -C $^ $@
-	cd $(STOWDEST)/.. && sudo stow vlc-deps && sudo ldconfig
+STOWDEST ?= vlc-deps
+include ../autoconf-template.mk
 
 
 SRC:
@@ -20,5 +9,5 @@ update: SRC
 	git submodule update --init
 config: SRC
 	[ -d build ] || mkdir -p build
-	cd build && bash ../SRC/configure --prefix=$(STOWDEST) \
+	cd build && bash ../SRC/configure --prefix=$(PREFIX) \
 		--enable-shared --enable-pic

@@ -1,19 +1,7 @@
 #! /usr/bin/make -f
-STOWDEST ?= /usr/local/stow/vlc-deps
-
-MAX_LOAD ?= $(shell echo `nproc` + 0.5 | bc)
-export MULTIMAKE ?= $(MAKE) -j -l $(MAX_LOAD)
-
-
+STOWDEST ?= vpx
 CFLAGS=-fpic
-
-build: config
-	$(MULTIMAKE) -C $@
-install: build
-	[ -d /usr/local/lib/pkgconfig ]
-	! [ -L /usr/local/lib/pkgconfig ]
-	$(MAKE) -C $^ $@
-	cd $(STOWDEST)/.. && sudo stow vlc-deps && sudo ldconfig
+include ../autoconf-template.mk
 
 
 debian-dep:
@@ -26,7 +14,7 @@ update: SRC
 	git submodule update --init
 config: SRC
 	[ -d build ] || mkdir -p build
-	cd build && sh ../SRC/configure --prefix=$(STOWDEST) \
+	cd build && sh ../SRC/configure --prefix=$(PREFIX) \
 		--disable-examples --disable-docs \
 		--enable-vp9-postproc --as=yasm \
 		--enable-runtime-cpu-detect --enable-shared --enable-postproc-visualizer \

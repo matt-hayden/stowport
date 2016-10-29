@@ -1,15 +1,7 @@
 #! /usr/bin/make -f
-STOWDEST ?= /usr/local/stow/vlc
+STOWDEST ?= vlc
+include ../autoconf-template.mk
 
-MAX_LOAD ?= $(shell echo `nproc` + 0.5 | bc)
-export MULTIMAKE ?= $(MAKE) -j -l $(MAX_LOAD)
-
-
-build: config
-	$(MULTIMAKE) -C $@
-install: build
-	sudo $(MAKE) -C $^ $@
-	cd $(STOWDEST)/.. && sudo stow --ignore='[.]cache$$' vlc
 
 debian-dep:
 	sudo apt -y install git libtool-bin lua5.1 build-essential pkg-config autoconf libsecret-1-dev
@@ -25,6 +17,6 @@ update: SRC
 	sh $^/bootstrap
 config: SRC
 	[ -d build ] || mkdir -p build
-	cd build && bash ../SRC/configure --prefix=$(STOWDEST) \
+	cd build && bash ../SRC/configure --prefix=$(PREFIX) \
 		--disable-nls --enable-pulse \
 		--enable-fdkaac=/usr/local --enable-x264=/usr/local --enable-x265=/usr/local --enable-opus=/usr/local --enable-vpx=/usr/local

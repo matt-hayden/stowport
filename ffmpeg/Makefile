@@ -1,22 +1,6 @@
 #! /usr/bin/make -f
-STOWDEST ?= /usr/local/stow/ffmpeg
-
-
-export ACLOCAL_FLAGS ?= -I /usr/local/share/aclocal
-export PKG_CONFIG_PATH ?= /usr/local/lib/pkgconfig
-
-
-MAX_LOAD ?= $(shell echo `nproc` + 0.5 | bc)
-export MULTIMAKE ?= $(MAKE) -j -l $(MAX_LOAD)
-
-
-build: config
-	$(MULTIMAKE) -C $@
-install: build
-	[ -d /usr/local/lib/pkgconfig ]
-	! [ -L /usr/local/lib/pkgconfig ]
-	$(MAKE) -C $^ $@
-	cd $(STOWDEST)/.. && sudo stow ffmpeg && sudo ldconfig
+STOWDEST ?= ffmpeg
+include ../autoconf-template.mk
 
 
 debian-dep:
@@ -38,7 +22,7 @@ update: SRC
 	git submodule update --init
 config: SRC
 	[ -d build ] || mkdir -p build
-	cd build && sh ../SRC/configure --prefix=$(STOWDEST) \
+	cd build && sh ../SRC/configure --prefix=$(PREFIX) \
 		--disable-static --as=yasm --enable-gpl \
 		--enable-nonfree --enable-shared --enable-avresample \
 		--enable-avisynth --enable-chromaprint --enable-fontconfig \
