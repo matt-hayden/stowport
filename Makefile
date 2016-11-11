@@ -1,4 +1,5 @@
 STOWROOT ?= /usr/local/stow
+include basic-template.mk
 
 LN = cp -Rul
 MAX_LOAD = $(shell echo `nproc` + 0.5 | bc)
@@ -81,6 +82,9 @@ libtorrent:
 	$(MAKE) -C $@ -f Makefile.recipe config
 
 # tor and dependencies
-tor: STOWDEST=$(STOWROOT)/tor
-tor: libressl
-	$(MAKE) -C $@ -f Makefile.recipe config
+tor: VERSION ?= tor-2.0.8.9
+thttpd: VERSION ?= thttpd-2.27
+thttpd tor:
+	[ -d "$@" ]
+	$(MAKE) -C $@ install
+.PHONY: thttpd tor
