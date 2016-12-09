@@ -1,10 +1,12 @@
 SUDO ?= sudo
 
+### packages need to define STOWDEST
+ifndef STOWDEST
+$(error STOWDEST is not set)
+endif
+
 STOWROOT ?= /usr/local/stow
 PREFIX ?= $(STOWROOT)/$(STOWDEST)
-
-export ACLOCAL_FLAGS ?= -I $(STOWROOT)/../share/aclocal
-export PKG_CONFIG_PATH ?= $(STOWROOT)/../lib/pkgconfig
 
 
 MAX_LOAD ?= $(shell echo `nproc` + 0.5 | bc)
