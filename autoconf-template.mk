@@ -1,3 +1,4 @@
+SUDO ?= sudo
 
 ifndef STOWROOT
 $(error STOWROOT is not set)
@@ -19,7 +20,11 @@ install: build
 	[ -d $(STOWROOT)/../lib/pkgconfig ]
 	! [ -L $(STOWROOT)/../lib/pkgconfig ]
 	$(MAKE) -C $^ $@
-	cd $(STOWROOT) && sudo stow --ignore='[.]cache$$' $(STOWDEST) && sudo ldconfig
+	cd $(STOWROOT) && \
+		$(SUDO) stow \
+		--ignore=share/info/dir --ignore='[.]cache$$' \
+		$(STOWDEST) && \
+		$(SUDO) ldconfig
 
 build: config
 	$(MULTIMAKE) -C $@
