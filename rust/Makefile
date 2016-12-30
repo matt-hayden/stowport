@@ -12,6 +12,8 @@ install: rustup.sh
 	sh rustup.sh --prefix=$(PREFIX) \
 		--disable-sudo --disable-ldconfig
 	cd $(STOWROOT) && \
-		$(SUDO) stow --ignore='[.]cache$$' $(STOWDEST) && \
+		$(SUDO) stow \
+		--ignore=/share/info/dir --ignore='[.]cache$$' \
+		$(STOWDEST) && \
 		$(SUDO) ldconfig
 

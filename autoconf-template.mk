@@ -24,7 +24,7 @@ install: build
 		$(SUDO) stow \
 		--ignore=share/info/dir --ignore='[.]cache$$' \
 		$(STOWDEST) && \
-		$(SUDO) ldconfig
+	$(SUDO) ldconfig
 
 build: config
 	$(MULTIMAKE) -C $@
