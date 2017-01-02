@@ -1,4 +1,5 @@
 #! /usr/bin/make -f
+include ../macros.mk
 
 build: SRC debian-dep
 	dub --parallel --root=SRC
