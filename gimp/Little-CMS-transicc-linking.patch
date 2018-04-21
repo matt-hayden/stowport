@@ -1,0 +1,13 @@
+diff --git a/utils/transicc/Makefile.am b/utils/transicc/Makefile.am
+index 05e8b69..2840f8e 100644
+--- a/utils/transicc/Makefile.am
++++ b/utils/transicc/Makefile.am
+@@ -12,7 +12,7 @@ AM_CPPFLAGS =  -I$(top_builddir)/include -I$(top_srcdir)/include \
+ bin_PROGRAMS = transicc 
+ 
+ transicc_LDADD = $(top_builddir)/src/liblcms2.la 
+-transicc_LDFLAGS = @LDFLAGS@
++transicc_LDFLAGS = @LDFLAGS@ -lm
+ transicc_SOURCES = transicc.c ../common/xgetopt.c ../common/vprf.c  ../common/utils.h
+ transicc_MANS = transicc.1
+ 

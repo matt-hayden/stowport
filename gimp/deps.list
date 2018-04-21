@@ -18,6 +18,7 @@ libgudev-1.0-dev
 libjson-c-dev
 libjson-glib-dev
 liblzma-dev
+libopenjpeg-dev
 libpango1.0-dev
 libpoppler-glib-dev
 librsvg2-dev

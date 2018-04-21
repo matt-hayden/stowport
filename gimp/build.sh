@@ -1,9 +1,10 @@
 set -e
+SUDO=sudo
 MAXLOAD=$(awk "BEGIN { print $(nproc) - 0.5 }")
 
 # Note: somehow, /usr/local/lib/pkgconfig will sometimes lose a+rX permissions.
 
-mkdir -p {libpng,mozjpeg,gexiv2,Little-CMS,libmypaint,babl,libwebp,gegl,gimp}-build
+mkdir -p {libpng,gexiv2,Little-CMS,libmypaint,babl,libwebp,gegl,gimp}-build
 
 if ! ldconfig -p | grep -iq libpng16.so
 then
@@ -14,31 +15,23 @@ then
 	read -p "Done with libpng, you may need to run stow and/or ldconfig"
 fi
 
-if ! ldconfig -p | grep -iq /usr/local/lib/libjpeg.so
-then
-	cd mozjpeg
-	autoreconf -fiv
-	cd ../mozjpeg-build
-	../mozjpeg/configure --prefix=/usr/local/stow/mozjpeg
-	make -j -l $MAXLOAD install
-	cd ..
-	read -p "Done with mozjpeg, you may need to run stow and/or ldconfig"
-fi
 
-if ! ldconfig -p | grep -iq /usr/local/lib/libjpeg.so
+if ! ldconfig -p | grep -iq libgexiv2.so
 then
-	cd ../gexiv2-build
+	cd gexiv2-build
 	../gexiv2-0.10.8/configure --prefix=/usr/local/stow/gimp-2.9 \
 		--enable-introspection
 	make -j -l $MAXLOAD
 	# Python packages
 	$SUDO make install
+	$SUDO chmod -R g+rwX /usr/local/stow/gimp-2.9
 	cd ..
 	read -p "Done with gexiv2, you may need to run stow and/or ldconfig"
 fi
 
+
 # lcms-2.9 had a misconfigured build which needed transicc_LDFLAGS = -lm
-if ! type transicc
+if ! ldconfig -p | grep -iq /usr/local/lib/liblcms2.so
 then
 	cd Little-CMS
 	autoreconf -fiv
@@ -79,6 +72,8 @@ then
 	read -p "Done with libwebp, you may need to run stow and/or ldconfig"
 fi
 
+#$SUDO chmod -R a+rX /usr/local/lib/pkgconfig
+
 if ! ldconfig -p | grep -iq libgegl-0.3.so
 then
 	cd gegl-build
@@ -91,7 +86,8 @@ fi
 if ! type gimp-2.9
 then
 	cd gimp-build
-	../gimp-2.9.6/configure --prefix=/usr/local/stow/gimp-2.9
+	../gimp-2.9.6/configure --prefix=/usr/local/stow/gimp-2.9 \
+		--disable-vector-icons
 	make -j -l $MAXLOAD install
 	cd ..
 fi
