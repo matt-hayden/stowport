@@ -1,11 +1,16 @@
 autoconf
 automake
 build-essential
+intltool
 pkg-config
 xsltproc
 
+glib-networking
 gobject-introspection
 libgirepository1.0-dev
+
+libgexiv2-dev
+liblcms2-dev
 
 gtk-doc-tools
 libaa1-dev
@@ -18,7 +23,6 @@ libgudev-1.0-dev
 libjson-c-dev
 libjson-glib-dev
 liblzma-dev
-libopenjpeg-dev
 libpango1.0-dev
 libpoppler-glib-dev
 librsvg2-dev
